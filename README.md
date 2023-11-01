@@ -1,6 +1,14 @@
 # CS520-Project
 UMass CS520 Fall 2023 Project
 
+## How to run the Application:
+- Flask server
+    - navigate to backend-Flask/venv
+    - run command 'flask run'
+- React app
+    - navigate to finalproject520
+    - run command 'npm start'
+
 # React
 - Create react app
 - Build and run 
@@ -18,7 +26,6 @@ UMass CS520 Fall 2023 Project
 
 - backend-Flask/venv
     - app.py: Add another route for testing the connection between react frontend and flask backend
-
 
 
 # Next steps

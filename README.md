@@ -6,7 +6,7 @@ UMass CS520 Fall 2023 Project
     - navigate to backend-Flask/venv
     - run command 'flask run'
 - React app
-    - navigate to finalproject520
+    - navigate to frontend (previously finalproject520)
     - run command 'npm start'
 
 # React
@@ -14,7 +14,7 @@ UMass CS520 Fall 2023 Project
 - Build and run 
     - npm install
     - npm start
-- finalproject520 
+- frontend (previously finalproject520) 
     - Added example fetch method using useEffect 
     - redirected react server to flask server using proxy in package.json
 # Flask

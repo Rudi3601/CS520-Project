@@ -15,8 +15,8 @@ def get_time():
     return {
         'Name':"geek", 
         "Age":"22",
-        "Date":x, 
-        "programming":"python"
+        "Med_history":"Diabetes", 
+        "BloodGroup":"A2B+ve"
         }
  
      

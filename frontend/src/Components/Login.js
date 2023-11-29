@@ -1,34 +1,37 @@
-import React from 'react'
-//onSubmit={this.handleSubmit}>
-function Login(){
-    return (
-        <div>
-            <h2>Login Form</h2>
-            <form>
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input
-                type="text"
-                id="username"
-                //value={this.state.username}
-                //onChange={this.handleUsernameChange}
-                />
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input
-                type="password"
-                id="password"
-                //value={this.state.password}
-                //onChange={this.handlePasswordChange}
-                />
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-            </form>
-        </div>
-    )
-}
+import React from "react";
 
-export default Login;
+export default function (props) {
+    return (
+      <div className="Auth-form-container">
+        <form className="Auth-form">
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title">Sign In</h3>
+            <div className="form-group mt-3">
+              <label>Email address</label>
+              <input
+                type="email"
+                className="form-control mt-1"
+                placeholder="Enter email"
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-control mt-1"
+                placeholder="Enter password"
+              />
+            </div>
+            <div className="d-grid gap-2 mt-3">
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
+            <p className="forgot-password text-right mt-2">
+              Forgot <a href="#">password?</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    )
+  }

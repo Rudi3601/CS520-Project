@@ -3,6 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Welcome from './Components/Welcome';
 import Login from './Components/Login';
+import LoginForm from './Components/LoginForm';
+import "bootstrap/dist/css/bootstrap.min.css"
 
 function App() {
   // usestate for setting a javascript
@@ -14,22 +16,25 @@ function App() {
       programming: "",
   });
 
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [email, setEmail] = useState("")
+
   // Using useEffect for single rendering
-  useEffect(() => {
-      // Using fetch to fetch the api from 
-      // flask server it will be redirected to proxy
-      fetch("/data").then((res) =>
-          res.json().then((data) => {
-              // Setting a data from api
-              setdata({
-                  name: data.Name,
-                  age: data.Age,
-                  date: data.Date,
-                  programming: data.programming,
-              });
-          })
-      );
-  }, []);
+//   useEffect(() => {
+//       // Using fetch to fetch the api from 
+//       // flask server it will be redirected to proxy
+//       fetch("/data").then((res) =>
+//           res.json().then((data) => {
+//               // Setting a data from api
+//               setdata({
+//                   name: data.Name,
+//                   age: data.Age,
+//                   date: data.Date,
+//                   programming: data.programming,
+//               });
+//           })
+//       );
+//   }, []);
 
   return (
     //   <div className="App">
@@ -43,12 +48,23 @@ function App() {
 
     //       </header>
     //   </div>
+    // <Router>
+    //     <Routes>
+    //         <Route exaxt path="/" element={<Welcome email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+    //         <Route exaxt path="/login" element={<Login/>} />
+    //     </Routes>
+    // </Router>
+
+    <div className="App">
     <Router>
-        <Routes>
-            <Route exaxt path="/" element={<Welcome/>} />
-            <Route exaxt path="/login" element={<Login/>} />
-        </Routes>
+    <Routes>
+        <Route path="/" element={<Welcome email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/loginform" element={<LoginForm />}/>
+    </Routes>
     </Router>
+    </div>
+
   );
 }
 

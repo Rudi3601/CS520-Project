@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px;
+            border: 0; /* Set border to 0 */
+        }
+        th, td {
+            border: 0; /* Set border to 0 */
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Patient Information</h2>
+
+    <div class="container">
+        <!-- First Table - Display Table -->
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>John Doe</td>
+            </tr>
+            <tr>
+                <td>DOB</td>
+                <td>01/01/1980</td>
+            </tr>
+            <tr>
+                <td>Medication</td>
+                <td>Placeholder Medication</td>
+            </tr>
+            <tr>
+                <td>Allergies</td>
+                <td>Placeholder Allergies</td>
+            </tr>
+        </table>
+
+        <!-- Second Table - Health Information Form -->
+        <form action="/submit_health_info" method="post">
+            <table>
+                <tr>
+                    <td>Blood Pressure</td>
+                    <td><input type="text" name="blood_pressure"></td>
+                </tr>
+                <tr>
+                    <td>Heart Rate</td>
+                    <td><input type="text" name="heart_rate"></td>
+                </tr>
+                <tr>
+                    <td>Symptoms</td>
+                    <td><input type="text" name="symptoms"></td>
+                </tr>
+                <tr>
+                    <td>Notes</td>
+                    <td><textarea name="notes" rows="4"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Submit"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>

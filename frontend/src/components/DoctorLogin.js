@@ -1,17 +1,27 @@
 // LoginPage.js
 import React, { useState } from 'react';
 import './DoctorLogin.css'
+import httpClient from "../httpClient";
+import { useNavigate } from "react-router-dom";
 
 const DoctorLogin = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
+  // TODO: Mock Data, Delete ASAP!
+  const users = [{ username: "Jane", password: "testpassword" }];
 
-  const handleLogin = () => {
-    // Add your authentication logic here (e.g., send credentials to a server)
-    console.log('Username:', username);
-    console.log('Password:', password);
-    // You can redirect the user or perform other actions based on successful login
+  const handleLogin = (e) => {
+    e.preventDefault()
+    const account = users.find((user) => user.username === username);
+    if (account && account.password === password) {
+        setauthenticated(true)
+        localStorage.setItem("authenticated", true);
+        navigate("/DoctorPortal");
+    }
   };
+
 
   return (
     <div>
@@ -41,6 +51,6 @@ const DoctorLogin = () => {
       </form>
     </div>
   );
-};
+}
 
 export default DoctorLogin;

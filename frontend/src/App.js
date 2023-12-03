@@ -42,6 +42,7 @@ function App() {
                     <Link className='child' to="/PatientLogin">Patient Login</Link>
                     <Link className='child' to="/DoctorLogin">Doctor Login</Link>
                 </div>
+                <Link to="/DoctorPortal">Doctor Portal</Link>
                 <div className="temporary">
                     {/* Calling a data from setdata for showing */}
                     {/* TODO: delete after finishing */}

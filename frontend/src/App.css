@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.rowC{display:flex; flex-direction:row;}
+
+.parent {
+  border: none;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  padding: 1rem;
+  border: none;
+  vertical-align: middle;
+}
+.temporary {
+  width: 600px; /* Set the desired width */
+  height: 30px; /* Set the desired height */
+  /* background-color: lightblue; /* Optional: Add some background color for visibility */
+  padding: 10px; /* Optional: Add padding for spacing inside the div */
+  margin: 20px; /* Optional: Add margin for spacing outside the div */
+  font-size: 14px;
+  color:red
+}

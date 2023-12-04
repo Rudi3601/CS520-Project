@@ -41,7 +41,7 @@
                 nameInput.focus();
                 return false; // Prevent form submission
             }
-
+            
             // Check username for special characters
             var nameRegex = /^[a-zA-Z\d]*$/;
             if (!nameRegex.test(usernameInput.value)) {
@@ -51,7 +51,7 @@
                 nameInput.focus();
                 return false; // Prevent form submission
             }
-
+            
             // Check if password contains only numbers, letters, _, -, !, ?
             var passwordRegex = /^[a-zA-Z0-9_\-!?\s]*$/;
             if (!passwordRegex.test(passwordInput.value)) {
@@ -62,21 +62,16 @@
                 passwordInput.focus();
                 return false; // Prevent form submission
             }
-
+            
             // Check if passwords match
-            console.log(passwordInput.value);
-            console.log(confirmPasswordInput.value);
-            if (document.getElementById('password').value ==
-                document.getElementById('confirm_password').value) {
-                console.log("Password not matching")
-                passwordError.textContent = "Passwords do not match. Please re-enter.";
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                alert("Passwords do not match. Please re-enter.");
                 confirmPasswordInput.value = ""; // Clear the confirm password field
                 confirmPasswordInput.focus();
                 return false; // Prevent form submission
             }
-
             // Clear the error message if everything is valid
-            passwordError.textContent = "";
+            // passwordError.textContent = "";
             // Submit the form
             return true; // Allow form submission
         }

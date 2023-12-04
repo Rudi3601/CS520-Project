@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Navigate } from "react-router-dom";
+import DoctorScheduleView from './DoctorScheduleView';
 
 const DoctorPortal = () => {
     // Protect this page
@@ -28,18 +29,8 @@ const DoctorPortal = () => {
 
     return (
         <div>
-        <h1>Doctor's Name</h1>
-        <div className="calendar">
-            <div className="hour-label">Time</div>
-            <div className="events">
-            {events.map((event) => (
-                <div key={event.hour} className="event">
-                <div className="hour">{event.hour}</div>
-                <div className="event-details">{event.event}</div>
-                </div>
-            ))}
-            </div>
-        </div>
+            <h1>Doctor's Name</h1>
+            <DoctorScheduleView />
         </div>
     );
 };

@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 const DoctorPortal = () => {
     // Protect this page
-    const [authenticated, setauthenticated] = useState(null);
+    const [authenticated, setauthenticated] = useState(localStorage.getItem("authenticated"));
     useEffect(() => {
         const loggedInUser = localStorage.getItem("authenticated");
         if (loggedInUser) {

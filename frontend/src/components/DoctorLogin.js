@@ -11,6 +11,9 @@ const DoctorLogin = () => {
   const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
   // TODO: Mock Data, Delete ASAP!
   const users = [{ username: "Jane", password: "testpassword" }];
+  // Implement authentication logic: 
+  // Send data back to Flask backend;
+  // Get authenticated user info from backend;
 
   const handleLogin = (e) => {
     e.preventDefault()

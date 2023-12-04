@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 import { Link } from 'react-router-dom';
-import Form from './components/Form.js';
-import UncontrolledForm from './components/UncontrolledForm.js';
 import httpClient from "./httpClient";
 import DoctorLogin from "./components/DoctorLogin.js";
 

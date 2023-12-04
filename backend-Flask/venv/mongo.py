@@ -13,21 +13,25 @@ uri = "mongodb+srv://super:superuser@atlascluster.j0uq5ga.mongodb.net/?retryWrit
 # except Exception as e:
 #     print(e)
 
-def add_user(username, password, email, DOB, history, allergies):
+def add_user(username, password, name,email, DOB, history, allergies):
     client = MongoClient(uri, server_api=ServerApi('1'))
     db = client['test']
     collection = db['users']
-    count = object_count(db, client)
-    user = {"PatientID": (count+1),"username": username, "password": hash(password), "email": email, "DOB": DOB, "history": history, "allergies": allergies}
+
+    num_documents = collection.count_documents({})
+    #count = object_count(db, client)
+    user = {"PatientID": (num_documents+1),"username": username, "name":name, "password": hash(password), "email": email, "DOB": DOB, "history": history, "allergies": allergies}
     collection.insert_one(user)
+
+    return True
     
 def object_count(db, client):
     return db.client.count()
-# try:
-#     add_user("test", "test", "test", "test", "test", "test")
-#     print("Added user successfully")
-# except Exception as e:
-#     print(e)
+try:
+    add_user("test", "test","name" ,"test", "test", "test", "test")
+    print("Added user successfully")
+except Exception as e:
+    print(e)
 
 def get_user(user, passw):
     client = MongoClient(uri, server_api=ServerApi('1'))
@@ -48,3 +52,5 @@ def get_user(username):
     collection = db['users']
     user = collection.find_one({"username": username})
     return user
+
+add_user("Prasad", "12345","name", "Prasad", "Prasad", "Prasad", "Prasad")

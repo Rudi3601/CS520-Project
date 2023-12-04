@@ -1,7 +1,7 @@
 <html>
     <body>
         <div className="Auth-form-container">
-            <form className="Auth-form">
+            <form className="Auth-form",method="post",action="/patient_login_submit">
               <div className="Auth-form-content">
                 <h3 className="Auth-form-title">Patient Login</h3>
                 <div className="form-group mt-3">
@@ -9,7 +9,8 @@
                   <input
                     type="email"
                     className="form-control mt-1"
-                    placeholder="Enter email"
+                    placeholder="Enter email",
+                    name="username"
                   />
                 </div>
                 <div className="form-group mt-3">
@@ -17,7 +18,8 @@
                   <input
                     type="password"
                     className="form-control mt-1"
-                    placeholder="Enter password"
+                    placeholder="Enter password",
+                    name = "pwd"
                   />
                 </div>
                 <div className="d-grid gap-2 mt-3">

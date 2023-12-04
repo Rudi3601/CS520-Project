@@ -20,18 +20,18 @@ def add_user(username, password, name,email, DOB, history, allergies):
 
     num_documents = collection.count_documents({})
     #count = object_count(db, client)
-    user = {"PatientID": (num_documents+1),"username": username, "name":name, "password": hash(password), "email": email, "DOB": DOB, "history": history, "allergies": allergies}
+    user = {"PatientID": (num_documents+1),"username": username, "name":name, "password": hash(password), "email": email, "DOB": DOB, "history": history, "allergies": allergies,"current_appointment":None}
     collection.insert_one(user)
 
     return True
     
 def object_count(db, client):
     return db.client.count()
-try:
-    add_user("test", "test","name" ,"test", "test", "test", "test")
-    print("Added user successfully")
-except Exception as e:
-    print(e)
+# try:
+#     add_user("test", "test","name" ,"test", "test", "test", "test")
+#     print("Added user successfully")
+# except Exception as e:
+#     print(e)
 
 def get_user(user, passw):
     client = MongoClient(uri, server_api=ServerApi('1'))
@@ -40,11 +40,11 @@ def get_user(user, passw):
     user = collection.find_one({username: user, password: hash(passw)})
     return ""+user['_id']
 
-try:
-    id = get_user("test", "test")
-    print(id)
-except Exception as e:
-    print(e)
+# try:
+#     id = get_user("test", "test")
+#     print(id)
+# except Exception as e:
+#     print(e)
 
 def get_user(username):
     client = MongoClient(uri, server_api=ServerApi('1'))
@@ -53,4 +53,21 @@ def get_user(username):
     user = collection.find_one({"username": username})
     return user
 
-add_user("Prasad", "12345","name", "Prasad", "Prasad", "Prasad", "Prasad")
+#add_user("Prasad", "12345","name", "Prasad", "Prasad", "Prasad", "Prasad")
+def delete_all_documents():
+    # Connect to MongoDB
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['users'] # Replace "your_collection_name" with your actual collection name
+
+    # Delete all documents in the collection
+    result = collection.delete_many({})
+
+    # Print the number of deleted documents
+    print(f"{result.deleted_count} documents deleted.")
+
+    # Close the MongoDB connection
+    client.close()
+
+# Example usage
+#delete_all_documents()

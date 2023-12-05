@@ -25,7 +25,7 @@
 
     <h2>Patient Information Form</h2>
 
-    <form action="/submit" method="post"> <!-- Replace "/submit" with your actual backend endpoint -->
+    <form action="/Patient_reg_submit" method="post"> <!-- Replace "/submit" with your actual backend endpoint -->
         <table>
             <tr>
                 <td>Name</td>
@@ -33,7 +33,11 @@
             </tr>
             <tr>
                 <td>DOB</td>
-                <td><input type="text" name="dob"></td>
+                <td><input type="date" name="dob"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="Email"></td>
             </tr>
             <tr>
                 <td>History of Medication</td>

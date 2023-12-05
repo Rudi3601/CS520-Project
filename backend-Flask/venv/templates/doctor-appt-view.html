@@ -6,6 +6,36 @@
     <title>Patient Information</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='doctor-appt-view.css') }}">
 </head>
+<script>
+    function validateInput() {
+        
+        var bloodPressureInput = document.getElementById('bloodPressure').value;
+        var heartRateInput = document.getElementById('heartRate').value;
+        var symptomsInput = document.getElementById('symptoms').value;
+        var notesInput = document.getElementById('notes').value;
+
+        if (bloodPressureInput.trim() === '' && heartRateInput.trim() === '' && symptomsInput.trim() === '' && notesInput.trim() === '') {
+            alert("Please enter information for the current appointment.");
+            return false; // Prevent form submission
+        }
+
+        // Check if the input is a valid integer or float
+        if (bloodPressureInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(bloodPressureInput)) {
+            alert("Blood pressure must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        // Check if the input is a valid integer or float
+        if (heartRateInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(heartRateInput)) {
+            alert("Heart Rate must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        // Continue with form submission if the input is valid
+        return true;
+    }
+
+</script>
 <body>
     <h1>Patient Information</h1>
     <div class="patient-info">
@@ -32,28 +62,36 @@
         <!-- Add more sections for other patient information -->
 
         <h2>Doctor's Inputs</h2>
+        
+        <form id="appointmentRecord" action="/submit" method="post" onsubmit="return validateInput()">
+                <label>Blood Pressure:</label>
+                <input type="text" id="bloodPressure" name="bloodPressure">
+                mmHg
 
-        <div class="info-section">
-            <label>Blood Pressure:</label>
-            <input type="text" id="bloodPressure" name="bloodPressure">
-        </div>
+                <br>
+                <br>
 
-        <div class="info-section">
-            <label>Heart Rate:</label>
-            <input type="text" id="heartRate" name="heartRate">
-        </div>
+                <label>Heart Rate:</label>
+                <input type="text" id="heartRate" name="heartRate">
+                bpm
 
-        <div class="info-section">
-            <label>Symptoms:</label>
-            <textarea id="symptoms" name="symptoms" rows="4"></textarea>
-        </div>
+                <br>
+                <br>
 
-        <div class="info-section">
-            <label>Notes:</label>
-            <textarea id="notes" name="notes" rows="4"></textarea>
-        </div>
+                <label>Symptoms:</label>
+                <textarea id="symptoms" name="symptoms" rows="4"></textarea>
 
-        <button type="submit">Save Information</button>
+                <br>
+                <br>
+
+                <label>Notes:</label>
+                <textarea id="notes" name="notes" rows="4"></textarea>
+
+                <br>
+                <br>
+    
+            <button type="submit">Save Information</button>
+        </form>
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Flask, render_template, request,jsonify
+from flask import Flask, render_template, request,jsonify,redirect, url_for
 from pymongo import MongoClient
 import datetime
 from mongo import *
@@ -50,6 +50,17 @@ def patient_register():
 def doctor_login():
     return render_template("Doctor_login.html")
 
+@app.route("/patient_login_submit",methods=["GET","POST"])
+def patient_login_submit():
+    if request.method =="POST":
+        username=request.form['username']
+        pwd = request.form['pwd']
+        status = get_user(user,passw)
+        if(status):
+            return render_template()
+
+
+
 """
 Called after the user hits submit in the register page
 Sends all the info to the add_user function in the mongo.py.
@@ -70,15 +81,13 @@ def new_patient_submit():
         pwd = request.form['password']
         c_pwd = request.form['confirm_password']
         email = request.form['Email']
-        status = True
+        # status = user_exists()
         status = add_user(username,pwd,Name,email,DOB,medication,allergies)
-
+        status = False
         if(status):
-            return render_template("Patient_login.html")
+            return redirect(url_for('patient_login'))
         else:
-            return """<html>
-                                   <body><H1>User exists</H1></body>
-                                   </html>"""
+            return redirect(url_for('patient_register'))
 
 
  

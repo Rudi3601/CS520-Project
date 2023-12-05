@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='patient-register.css') }}">
+    <script>
+        function validateName() {
+            var nameInput = document.getElementById("name");
+            var regex = /^[a-zA-Z\s]*$/; // Only allow letters and spaces
+
+            if (!regex.test(nameInput.value)) {
+                alert("Please enter a valid name (only letters and spaces allowed).");
+                nameInput.value = ""; // Clear the input
+                nameInput.focus();
+            }
+        }
+        var check = function() {
+            if (document.getElementById('password').value ==
+                document.getElementById('confirm_password').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'Passwords matching';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Passwords not matching';
+            }
+        }
+        function validateForm() {
+            var nameInput = document.getElementById("name");
+            var usernameInput = document.getElementById("username");
+            var passwordInput = document.getElementById("password");
+            var confirmPasswordInput = document.getElementById("confirm_password");
+            var passwordError = document.getElementById("passwordError");
+
+            // Check name for special characters
+            var nameRegex = /^[a-zA-Z\s]*$/;
+            if (!nameRegex.test(nameInput.value)) {
+                alert("Please enter a valid name (only letters and spaces allowed).");
+                nameInput.value = ""; // Clear the input
+                nameInput.focus();
+                return false; // Prevent form submission
+            }
+            
+            // Check username for special characters
+            var nameRegex = /^[a-zA-Z\d]*$/;
+            if (!nameRegex.test(usernameInput.value)) {
+                console.log("Username invalid")
+                alert("Please enter a valid username (only letters and digits allowed).");
+                nameInput.value = ""; // Clear the input
+                nameInput.focus();
+                return false; // Prevent form submission
+            }
+            
+            // Check if password contains only numbers, letters, _, -, !, ?
+            var passwordRegex = /^[a-zA-Z0-9_\-!?\s]*$/;
+            if (!passwordRegex.test(passwordInput.value)) {
+                console.log("Password invalid")
+                alert("Please enter a valid password (only numbers, letters, _, -, !, ? allowed).");
+                passwordInput.value = ""; // Clear the password field
+                confirmPasswordInput.value = ""; // Clear the confirm password field
+                passwordInput.focus();
+                return false; // Prevent form submission
+            }
+            
+            // Check if passwords match
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                alert("Passwords do not match. Please re-enter.");
+                confirmPasswordInput.value = ""; // Clear the confirm password field
+                confirmPasswordInput.focus();
+                return false; // Prevent form submission
+            }
+                // Submit the form
+            return true; // Allow form submission
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Registration</h1>
+        <form id="registration-form" action="/Patient_reg_submit" method="post" onsubmit="return validateForm()">
+            <label for="name">Legal Name:</label>
+            <input type="text" id="name" name="name" oninput="validateName()" required>
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" oninput="validateName()" required>
+
+            <label for="password">password:</label>
+            <input type="password" id="password" name="password" onkeyup='check()' required/>
+
+            <label for="confirm_password">confirm password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" onkeyup='check()' required/> 
+            <span id='message'></span>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"  required>
+
+            <!-- <label for="medication">History of Medication:</label>
+            <textarea id="medication" name="medication" rows="4" required></textarea> -->
+
+            <label for="allergies">Allergies:</label>
+            <textarea id="allergies" name="allergies" rows="4" required></textarea>
+
+            <label for="conditions">History of Medical Conditions:</label>
+            <textarea id="conditions" name="conditions" rows="4" required></textarea>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already registered? <a href="/patient-login">Login as a patient</a></p>
+        <p>Username already exists</p>
+    </div>
+</body>
+</html>

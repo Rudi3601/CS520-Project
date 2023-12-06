@@ -64,7 +64,7 @@ def patient_login(user, passw):
         print(key)
         print(fernet.encrypt(passw.encode()))
         print(fernet.decrypt(user['password']).decode())
-        
+        print(passw,fernet.decrypt(user['password']).decode())
         if passw != fernet.decrypt(user['password']).decode():
             return False
         return user
@@ -75,7 +75,7 @@ def patient_login(user, passw):
 
 
 # try:
-#     id = patient_login("darshuser", "Darshpass")
+#     id = patient_login("padhiyaman", "12345")
 #     print(id)
 # except Exception as e:
 #     print(e)

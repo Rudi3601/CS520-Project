@@ -74,12 +74,13 @@
         return true;
     }
     window.onload = function() {
+        var user_details = {{ user_details | tojson}};
         // BACKEND DATA
         var patientInfo = {
-        name: "John Doe",
-        dob: "January 1, 1980",
-        allergies: "None",
-        medicalHistory: "No significant history"
+        name: user_details.name,
+        dob: user_details.DOB,
+        allergies: user_details.allergies,
+        medicalHistory: user_details.history
         };
 
         var appointmentInfo = {

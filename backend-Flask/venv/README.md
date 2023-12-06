@@ -16,6 +16,9 @@ Doctor Login/Register:
 - doctor_login to authenticate doctor
 - applied fernet class from cryptography module for authentication security
 
+Schedule CRUD: 
+- Create schedule
+- get_schedule by DoctorID
 DataBase:
 - MainDB:
     - doctors collection

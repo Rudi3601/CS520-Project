@@ -5,55 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='doctor-appt-view.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .enter {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        span {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 10%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 70%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
+<script language="javascript" type="text/javascript">
+    function validateInput() {
+        
+        var bloodPressureInput = document.getElementById('bloodPressure').value;
+        var heartRateInput = document.getElementById('heartRate').value;
+        var symptomsInput = document.getElementById('symptoms').value;
+        var notesInput = document.getElementById('notes').value;
+
+        if (bloodPressureInput.trim() === '' && heartRateInput.trim() === '' && symptomsInput.trim() === '' && notesInput.trim() === '') {
+            alert("Please enter information for the current appointment.");
+            return false; // Prevent form submission
+        }
+
+        // Check if the input is a valid integer or float
+        if (bloodPressureInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(bloodPressureInput)) {
+            alert("Blood pressure must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        // Check if the input is a valid integer or float
+        if (heartRateInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(heartRateInput)) {
+            alert("Heart Rate must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        // Continue with form submission if the input is valid
+        return true;
+    }
+    window.onload = function() {
+        // BACKEND DATA
+        var patientInfo = {
+        name: "John Doe",
+        dob: "January 1, 1980",
+        allergies: "None",
+        medicalHistory: "No significant history"
+        };
+
+        var appointmentInfo = {
+            date: "January 1, 2022",
+            time: "9:00AM"
+        }
+
+        document.getElementById('name').textContent = patientInfo.name;
+        document.getElementById('dob').textContent = patientInfo.dob;
+        document.getElementById('allergies').textContent = patientInfo.allergies;
+        document.getElementById('medicalHistory').textContent = patientInfo.medicalHistory;
+        document.getElementById('appointmentDate').textContent = appointmentInfo.date;
+        document.getElementById('appointmentTime').textContent = appointmentInfo.time;
+    }
+
+</script>
 <body>
+    <div>
+        <h3>Appointment Details</h3>
+        <label class="info" for="appointmentDate">Date:</label>
+        <span id="appointmentDate"></span>
+        <br><br>
+        <label class="info" for="appointmentTime">Time:</label>
+        <span id="appointmentTime"></span>
+    </div>
+
     <h1>Patient Information</h1>
     <div class="patient-info">
         <div class="info-section">
-            <label>Name:</label>
-            <span id="name">FROM BACKEND</span>
+            <label class="info">Name:</label>
+            <span id="name"></span>
         </div>
 
         <div class="info-section">
-            <label>Date of Birth:</label>
-            <span id="dob">FROM BACKEND</span>
+            <label class="info">Date of Birth:</label>
+            <span id="dob"></span>
         </div>
 
         <div class="info-section">
-            <label>Allergies:</label>
-            <span id="medicalHistory">FROM BACKEND</span>
+            <label class="info">Allergies:</label>
+            <span id="allergies"></span>
         </div>
 
         <div class="info-section">
-            <label>Medical History:</label>
-            <span id="medicalHistory">FROM BACKEND</span>
+            <labe class="info"l>Medical History:</label>
+            <span id="medicalHistory"></span>
         </div>
 
         <!-- Add more sections for other patient information -->
 
         <h2>Doctor's Inputs</h2>
+        
+        <form id="appointmentRecord" action="/submit" method="post" onsubmit="return validateInput()">
+                <label class="enter">Blood Pressure:</label>
+                <input type="text" id="bloodPressure" name="bloodPressure">
+                mmHg
 
-        <div class="info-section">
-            <label>Blood Pressure:</label>
-            <input type="text" id="bloodPressure" name="bloodPressure">
-        </div>
+                <br>
+                <br>
 
-        <div class="info-section">
-            <label>Heart Rate:</label>
-            <input type="text" id="heartRate" name="heartRate">
-        </div>
+                <label class="enter">Heart Rate:</label>
+                <input type="text" id="heartRate" name="heartRate">
+                bpm
 
-        <div class="info-section">
-            <label>Symptoms:</label>
-            <textarea id="symptoms" name="symptoms" rows="4"></textarea>
-        </div>
+                <br>
+                <br>
 
-        <div class="info-section">
-            <label>Notes:</label>
-            <textarea id="notes" name="notes" rows="4"></textarea>
-        </div>
+                <label class="enter">Symptoms:</label>
+                <textarea id="symptoms" name="symptoms" rows="4"></textarea>
 
-        <button type="submit">Save Information</button>
+                <br>
+                <br>
+
+                <label class="enter">Notes:</label>
+                <textarea id="notes" name="notes" rows="4"></textarea>
+
+                <br>
+                <br>
+    
+            <button type="submit">Save Information</button>
+        </form>
+        <!-- Button to link to the "Past Visits" page -->
+        <br>
+        <a href="medical_history_record.html">
+            <button>Past Visits</button>
+        </a>
     </div>
 </body>
 </html>

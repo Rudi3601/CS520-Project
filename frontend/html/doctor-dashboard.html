@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weekly Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10 am</td>
+                <td><button onclick="redirectToPage('Monday 10 am')">Name 1</button></td>
+                <td><button onclick="redirectToPage('Tuesday 10 am')">Name 2</button></td>
+                <td><button onclick="redirectToPage('Wednesday 10 am')">Name 3</button></td>
+                <td><button onclick="redirectToPage('Thursday 10 am')">Name 4</button></td>
+                <td><button onclick="redirectToPage('Friday 10 am')">Name 5</button></td>
+            </tr>
+            <tr>
+                <td>11 am</td>
+                <td><button onclick="redirectToPage('Monday 11 am')">Name 6</button></td>
+                <td><button onclick="redirectToPage('Tuesday 11 am')">Name 7</button></td>
+                <td><button onclick="redirectToPage('Wednesday 11 am')">Name 8</button></td>
+                <td><button onclick="redirectToPage('Thursday 11 am')">Name 9</button></td>
+                <td><button onclick="redirectToPage('Friday 11 am')">Name 10</button></td>
+            </tr>
+            <tr>
+                <td>12 pm</td>
+                <td><button onclick="redirectToPage('Monday 12 pm')">Name 6</button></td>
+                <td><button onclick="redirectToPage('Tuesday 12 pm')">Name 7</button></td>
+                <td><button onclick="redirectToPage('Wednesday 12 pm')">Name 8</button></td>
+                <td><button onclick="redirectToPage('Thursday 12 pm')">Name 9</button></td>
+                <td><button onclick="redirectToPage('Friday 12 pm')">Name 10</button></td>
+            </tr>
+            <tr>
+                <td>1 pm</td>
+                <td><button onclick="redirectToPage('Monday 1 pm')">Name 6</button></td>
+                <td><button onclick="redirectToPage('Tuesday 1 pm')">Name 7</button></td>
+                <td><button onclick="redirectToPage('Wednesday 1 pm')">Name 8</button></td>
+                <td><button onclick="redirectToPage('Thursday 1 pm')">Name 9</button></td>
+                <td><button onclick="redirectToPage('Friday 1 pm')">Name 10</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function redirectToPage(name) {
+            // Replace '#' with the actual URL you want to redirect to
+            window.location.href = '#' + encodeURIComponent(name);
+        }
+    </script>
+</body>
+</html>

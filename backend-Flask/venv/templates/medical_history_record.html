@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Patient Past Visits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .visit {
+            margin-bottom: 15px;
+        }
+        .visit-details {
+            display: none;
+        }
+        button {
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .visit-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            /* Initially show the visit details */
+            display: none;
+        }
+        .toggle-button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #patientName {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        #chartContainer {
+            max-width: 600px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<script>
+    
+    function toggleVisitDetails(visitId) {
+        var details = document.getElementById("details" + visitId.substring(5));
+        details.style.display = details.style.display === "none" ? "block" : "none";
+    }
+
+    // Mock data, should retrieve from Backend
+
+    const patientName = "John Doe";
+
+    const patientData = {
+        "2023-01-01": {
+            doctorID: "Doc123",
+            symptoms: "Fever and headache",
+            bloodPressure: "120/80",
+            heartRate: 75,
+            oxygenSaturation: 98,
+            diagnosis: "Flu",
+            doctorsNotes: "Prescribed rest and fluids",
+        },
+        "2023-02-03": {
+            doctorID: "Doc123",
+            symptoms: "Dizziness",
+            bloodPressure: "110/80",
+            heartRate: 70,
+            oxygenSaturation: 100,
+            diagnosis: "Common cold",
+            doctorsNotes: "Rest",
+        },
+    };
+        
+    function renderPatientInfo() {
+        const patientNameContainer = document.getElementById("patientName");
+        patientNameContainer.textContent = `Patient: ${patientName}`;
+    }
+
+    // Function to render patient visits
+    function renderPatientVisits() {
+        const visitsContainer = document.getElementById("visitsContainer");
+
+        // Clear existing content
+        visitsContainer.innerHTML = "";
+
+        // Loop through the patientData dictionary
+        for (const [date, visitDetails] of Object.entries(patientData)) {
+
+            const visitWrapper = document.createElement("div");
+            visitWrapper.classList.add("visit-wrapper");
+
+            // Create a container for each visit
+            const visitContainer = document.createElement("div");
+            visitContainer.classList.add("visit-container");
+
+            // Create HTML content for the visit
+            const visitHTML = `
+                <strong>Date:</strong> ${date}<br>
+                <strong>Doctor ID:</strong> ${visitDetails.doctorID}<br>
+                <strong>Symptoms:</strong> ${visitDetails.symptoms}<br>
+                <strong>Blood Pressure:</strong> ${visitDetails.bloodPressure}<br>
+                <strong>Heart Rate:</strong> ${visitDetails.heartRate}<br>
+                <strong>Oxygen Saturation:</strong> ${visitDetails.oxygenSaturation}%<br>
+                <strong>Diagnosis:</strong> ${visitDetails.diagnosis}<br>
+                <strong>Doctor's Notes:</strong> ${visitDetails.doctorsNotes}<br>
+            `;
+
+            // Set the HTML content for the visit container
+            visitContainer.innerHTML = visitHTML;
+
+            // Create a toggle button for the visit
+            const toggleButton = document.createElement("button");
+            toggleButton.classList.add("toggle-button");
+            toggleButton.textContent = `Expand Details of Visit on ${date}`;
+
+            // Add a click event listener to toggle the visibility and update the button text
+            toggleButton.addEventListener("click", () => {
+                if (visitContainer.style.display === "none") {
+                    visitContainer.style.display = "block";
+                    toggleButton.textContent = `Hide Details of Visit on ${date}`;
+                } else {
+                    visitContainer.style.display = "none";
+                    toggleButton.textContent = `Expand Details of Visit on ${date}`;
+                }
+            });
+
+            // Append the toggle button and visit container to the main container
+            visitWrapper.appendChild(toggleButton);
+            visitWrapper.appendChild(visitContainer);
+
+            // Append the wrapper to the main container
+            visitsContainer.appendChild(visitWrapper);
+        }
+    }
+
+    function renderHeartRateTrendChart() {
+        // Heart rate data stored in a list (array)
+        const heartRateData = [78, 82, 85, /* Add more heart rates as needed */];
+
+        // Get the "See Trend" button
+        const seeTrendButton = document.getElementById("seeHeartRateTrendButton");
+
+        // Event listener for the "See Trend" button
+        seeTrendButton.addEventListener("click", () => {
+            // Create a chart using Chart.js
+            const ctx = document.getElementById("heartRateChart").getContext("2d");
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: heartRateData.map((_, index) => `Checkup ${index + 1}`),
+                    datasets: [{
+                        label: 'Heart Rate Trend',
+                        data: heartRateData,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Checkup Number',
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Heart Rate',
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+    function renderOxySatTrendChart() {
+        // Heart rate data stored in a list (array)
+        const oxygenSaturationData = [95, 99, 98, /* Add more heart rates as needed */];
+
+        // Get the "See Trend" button
+        const seeTrendButton = document.getElementById("seeOxygenSaturationTrendButton");
+
+        // Event listener for the "See Trend" button
+        seeTrendButton.addEventListener("click", () => {
+            // Create a chart using Chart.js
+            const ctx = document.getElementById("oxygenSaturationChart").getContext("2d");
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: oxygenSaturationData.map((_, index) => `Checkup ${index + 1}`),
+                    datasets: [{
+                        label: 'Oxygen Saturation Trend',
+                        data: oxygenSaturationData,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Checkup Number',
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Oxygen Saturation',
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+    window.onload = function() {
+        renderPatientInfo();
+        renderPatientVisits();
+        renderHeartRateTrendChart();
+        renderOxySatTrendChart();
+    }
+</script>
+<body>
+    <h2>Patient Past Visits</h2>
+
+    <div id="patientName"></div>
+
+    <div id="visitsContainer"></div>
+
+    <!-- Button to see trend -->
+    <button id="seeHeartRateTrendButton">See Heart Rate Trend</button>
+
+    <!-- Container for the chart -->
+    <div id="chartContainer">
+        <canvas id="heartRateChart"></canvas>
+    </div>
+
+    <button id="seeOxygenSaturationTrendButton">See Oxygen Saturation Trend</button>
+    
+    <div id="chartContainer">
+        <canvas id="oxygenSaturationChart"></canvas>
+    </div>
+
+
+</body>
+</html>

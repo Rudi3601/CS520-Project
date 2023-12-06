@@ -7,7 +7,7 @@ from mongo import *
 x = datetime.datetime.now()
  
 # Initializing flask app
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
  
 #DB connection
 client = MongoClient("mongodb+srv://super:xCtC5CJfyAWJyvCK@atlascluster.j0uq5ga.mongodb.net/")
@@ -36,30 +36,49 @@ False: Username already exists
 
 @app.route("/")
 def welcome_page():
-    return render_template("Welcome_page.html")
+    return render_template("welcome.html")
 
 @app.route("/patient_login")
-def patient_login():
-    return render_template("Patient_login.html")
+def patient_login_page():
+    return render_template("patient-login.html")
 
 @app.route("/patient_register")
 def patient_register():
-    return render_template("Patient_register.html")
+    return render_template("patient-register.html")
 
 @app.route("/doctor_login")
-def doctor_login():
-    return render_template("Doctor_login.html")
+def doctor_login_page():
+    return render_template("doctor-login.html")
+
+@app.route("/doctor_login_submit",methods=["GET","POST"])
+def doctor_login_submit():
+    if request.method =="POST":
+        username=request.form['username']
+        pwd = request.form['password']
+        status = doctor_login(username,pwd)
+        print(username,pwd)
+        print(status)
+        if(status):
+            return """<html>Welcome Doctor</html>"""
+        else:
+            return """<html>Wrong username or password</html>"""
 
 @app.route("/patient_login_submit",methods=["GET","POST"])
 def patient_login_submit():
     if request.method =="POST":
         username=request.form['username']
-        pwd = request.form['pwd']
-        status = get_user(user,passw)
+        pwd = request.form['password']
+        status = patient_login(username,pwd)
+        print(username,pwd)
+        print(status)
         if(status):
-            return render_template()
+            return """<html>Welcome Patient</html>"""
+        else:
+            return """<html>Wrong username or password</html>"""
 
-
+@app.route("/patient_register_userexist")
+def patient_register_userexist():
+    return render_template("patient-register-userexist.html")
 
 """
 Called after the user hits submit in the register page
@@ -76,18 +95,21 @@ def new_patient_submit():
         username=request.form['username']
         Name = request.form['name']
         DOB = request.form['dob']
-        medication = request.form['medication']
+        medication = request.form['conditions']
         allergies = request.form['allergies']
         pwd = request.form['password']
         c_pwd = request.form['confirm_password']
-        email = request.form['Email']
-        # status = user_exists()
-        status = add_user(username,pwd,Name,email,DOB,medication,allergies)
-        status = False
-        if(status):
-            return redirect(url_for('patient_login'))
+        email = request.form['email']
+        status = patient_exists(username)
+        #status = add_patient(username,pwd,Name,email,DOB,medication,allergies)
+        if(not status):
+            added_flag = add_patient(username,pwd,Name,email,DOB,medication,allergies)
+            if(added_flag):
+                return redirect(url_for('patient_login_page'))
+            else:
+                return """<html>Cant add</html>"""
         else:
-            return redirect(url_for('patient_register'))
+            return redirect(url_for('patient_register_userexist'))
 
 
  

@@ -16,6 +16,9 @@ Doctor Login/Register:
 - doctor_login to authenticate doctor
 - applied fernet class from cryptography module for authentication security
 
+Schedule CRUD: 
+- Create schedule
+- get_schedule by DoctorID
 DataBase:
 - MainDB:
     - doctors collection
@@ -36,3 +39,19 @@ DataBase:
             - key
             - history
             - allergies
+
+    - schedule collection
+        - Document
+            - DoctorID
+            - Monday
+                - "8-9": "PatientID"
+                - "9-10": "PatientID"
+                - ...
+            - Tuesday
+                - ...
+            - Wednesday
+                - ...
+            - Thursday
+                - ...
+            - Friday
+                - ...

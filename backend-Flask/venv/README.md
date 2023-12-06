@@ -36,3 +36,19 @@ DataBase:
             - key
             - history
             - allergies
+
+    - schedule collection
+        - Document
+            - DoctorID
+            - Monday
+                - "8-9": "PatientID"
+                - "9-10": "PatientID"
+                - ...
+            - Tuesday
+                - ...
+            - Wednesday
+                - ...
+            - Thursday
+                - ...
+            - Friday
+                - ...

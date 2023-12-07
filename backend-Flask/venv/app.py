@@ -223,11 +223,17 @@ def appt_submit(day_time):
     else:
         return """Error"""
 
-@app.route("/medical_history_record/<patient_id>",methods=["GET","POST"])
-def medical_history(patient_id):
+@app.route("/medical_history_record/<appt_pat_id>",methods=["GET","POST"])
+def medical_history(appt_pat_id):
+    decoded_string = unquote(appt_pat_id)
+    patient_id,Day,time = decoded_string.split(" ")
     appointments = get_all_appointments(patient_id)
+    # print(appointments)
     if(appointments):
-        return render_template("medical_history_record.html",patient_details = appointments)
+    #     for doc in appointments:
+    #         print(f"{doc}:{type(doc)}")
+        appointments = list(appointments)
+        return render_template("medical_history_record_v2.html",patient_details_and_appt = [Day,time,appointments])
 
 @app.route("/patient_logout",methods=["GET","POST"])
 def patient_logout():

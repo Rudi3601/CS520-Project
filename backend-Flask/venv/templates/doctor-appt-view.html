@@ -95,7 +95,7 @@
         document.getElementById('appointmentDate').textContent = appointmentInfo.date;
         document.getElementById('appointmentTime').textContent = appointmentInfo.time;
         document.getElementById("appointmentRecord").action = "/appt_submit/"+encodeURIComponent(appointmentInfo.date+" "+appointmentInfo.time)
-        document.getElementById("myLink").href  = '/medical_history_record/' + patientInfo.username;
+        document.getElementById("myLink").href  = '/medical_history_record/' + encodeURIComponent(patientInfo.username+" "+user_details.day+" "+user_details.time);
     }
 
 </script>

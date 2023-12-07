@@ -1,7 +1,5 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import bcrypt
-import json
 from cryptography.fernet import Fernet
 # Replace the placeholder with your Atlas connection string
 uri = "mongodb+srv://super:superuser@atlascluster.j0uq5ga.mongodb.net/?retryWrites=true&w=majority"
@@ -106,31 +104,70 @@ def get_patient(username):
         print(e)
         return None
     
-# def update_patient(username, password, name, email, DOB, history, allergies):
-#     client = MongoClient(uri, server_api=ServerApi('1'))
-#     db = client['test']
-#     collection = db['users']
+# try:
+#     id = get_patient("darshuser")
+#     print(id)
+# except Exception as e:
+#     print(e)
     
-#     key = Fernet.generate_key()
-#     fernet = Fernet(key)
+# update_patient_password -> update patient password
+# type signature -> update_patient_password(username: str, old_password: str, new_password: str) -> bool
+# test in app
+def update_patient_password(username, old_password, new_password):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['users']
     
-#     try:
-#         if not patient_exists(username):
-#             return False
-#         user = collection.find_one({"username": username})
-#         user['name'] = name
-#         user['password'] = fernet.encrypt(password.encode())
-#         user['hash_key'] = key
-#         user['email'] = email
-#         user['DOB'] = DOB
-#         user['history'] = history
-#         user['allergies'] = allergies
-#         collection.update_one({"username": username}, {"$set": user})
-#         return True
-#     except Exception as e:
-#         print(e)
-#         return False
+    try:
+        user = collection.find_one({"username": username})
+        key = user['hash_key']
+        fernet = Fernet(key)
+        if old_password != fernet.decrypt(user['password']).decode():
+            return False
+        key = fernet.generate_key()
+        fernet = Fernet(key)
+        user['hash_key'] = key
+        user['password'] = fernet.encrypt(new_password.encode())
+        collection.update_one({"username": username}, {"$set": user})
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
+# try:
+#     id = update_patient_password("darshuser", "Darshpass", "Darshpass")
+#     print(id)
+# except Exception as e:
+#     print(e)
+
+# update_patient_info -> update patient info
+# type signature -> update_patient_info(username: str, name: str, email: str, DOB: str, history: str, allergies: str) -> bool
+# test in app
+def update_patient_info(username, name, email, DOB, history, allergies):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['users']
+    
+    try:
+        if not patient_exists(username):
+            return False
+        user = collection.find_one({"username": username})
+        user['name'] = name if name != "" else user['name']
+        user['email'] = email if email != "" else user['email']
+        user['DOB'] = DOB if DOB != "" else user['DOB']
+        user['history'] = history if history != "" else user['history']
+        user['allergies'] = allergies if allergies != "" else user['allergies']
+        collection.update_one({"username": username}, {"$set": user})
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+# try: 
+#     id = update_patient_info("darshuser", "Darsh G", "dgondalia@umass.edu", "01-02-2001", "", "")
+#     print(id)
+# except Exception as e:
+#     print(e)
     
 ### Doctor CRUD
 # doctor_exits -> check if doctor exists
@@ -266,4 +303,143 @@ def get_doctor_schedule(doctor_id):
         print(e)
         return None
     
-# print(get_doctor_schedule(1))
+# try:
+#     print(get_doctor_schedule(1))
+# except Exception as e:
+#     print(e)
+
+# update_schedule -> update schedule for a doctor
+# type signature -> update_schedule(dict(str(DoctorID): int, schedule: dict(str(days): dict(str(time_slots): str))) -> bool
+def update_schedule(schedule):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['schedule']
+    print(schedule, "input schedule")
+    # schedule = {"DoctorID": ..., "Schedule": {"Monday": {"8-9": ..., "9-10": ..., ...}, "Tuesday": {...}, ...}}
+    try: 
+        current_schedule = collection.find_one({"DoctorID": schedule['DoctorID']})
+        print(current_schedule, "current schedule")
+        for day in schedule['Schedule']:
+            for hour in schedule['Schedule'][day]:
+                current_schedule[day][hour] = schedule['Schedule'][day][hour]
+        print(current_schedule, "updated schedule")
+        collection.update_one({"DoctorID": schedule['DoctorID']}, {"$set": current_schedule})
+        return True
+    except Exception as e:
+        print(e)
+        return False
+    
+# try:
+#     testschedule = {
+#         "DoctorID": 1, 
+#         "Schedule": {
+#             "Monday": {
+#                 "8-9": "darshuser",
+#                 "9-10": "padhiyaman", 
+#                 "10-11": "dgondalia", 
+#                 "11-12": "darshuser", 
+#                 "12-13": "padhiyaman", 
+#                 "13-14": "dgondalia", 
+#                 "14-15": "darshuser", 
+#                 "15-16": "padhiyaman", 
+#                 "16-17": "dgondalia", 
+#                 "17-18": "darshuser"}, 
+#             "Tuesday": {
+#                 "8-9": "padhiyaman", 
+#                 "9-10": "dgondalia",
+#                 "10-11": "darshuser",
+#                 "11-12": "padhiyaman",
+#                 "12-13": "dgondalia",
+#                 "13-14": "darshuser",
+#                 "14-15": "padhiyaman",
+#                 "15-16": "dgondalia",
+#                 "16-17": "darshuser",
+#                 "17-18": "padhiyaman"}, 
+#             "Wednesday": {
+#                 "8-9": "dgondalia",
+#                 "9-10": "darshuser",
+#                 "10-11": "padhiyaman",
+#                 "11-12": "dgondalia",
+#                 "12-13": "darshuser",
+#                 "13-14": "padhiyaman",
+#                 "14-15": "dgondalia",
+#                 "15-16": "darshuser",
+#                 "16-17": "padhiyaman",
+#                 "17-18": "dgondalia"},
+#             "Thursday": {
+#                 "8-9": "darshuser",
+#                 "9-10": "padhiyaman",
+#                 "10-11": "dgondalia", 
+#                 "11-12": "darshuser",
+#                 "12-13": "padhiyaman",
+#                 "13-14": "dgondalia",
+#                 "14-15": "darshuser",
+#                 "15-16": "padhiyaman", 
+#                 "16-17": "dgondalia", 
+#                 "17-18": "darshuser"},
+#             "Friday": {
+#                 "8-9": "padhiyaman",
+#                 "9-10": "dgondalia",
+#                 "10-11": "darshuser",
+#                 "11-12": "padhiyaman", 
+#                 "12-13": "dgondalia",
+#                 "13-14": "darshuser",
+#                 "14-15": "padhiyaman", 
+#                 "15-16": "dgondalia",
+#                 "16-17": "darshuser",
+#                 "17-18": "padhiyaman"
+#                 }
+#             }
+#         }
+#     print(update_schedule(testschedule), "testing update_schedule")
+#     print(get_doctor_schedule(1), "\n ,get_doctor_schedule(1)")
+# except Exception as e:
+#     print(e)
+
+#patient books an appointment
+def book_appointment(doctor_id, patient_id, day, hour):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['schedule']
+    
+    try:
+        schedule = collection.find_one({"DoctorID": doctor_id})
+        if schedule[day][hour] != "":
+            return False
+        
+        schedule[day][hour] = patient_id
+        collection.update_one({"DoctorID": doctor_id}, {"$set": schedule})
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+# try:
+#     print(book_appointment(2, "darshuser", "Monday", "9-10"))
+# except Exception as e:
+#     print(e)
+
+# appointments CRUD
+# def create_appointment(patientID, doctorID, reason, day, time):
+#     client = MongoClient(uri, server_api=ServerApi('1'))
+#     db = client['test']
+#     collection = db['appointments']
+
+#     try:
+#         appointment = {
+#             "PatientID": patientID, 
+#             "DoctorID": doctorID, 
+#             "Day": day, 
+#             "Time": time,
+#             "Reason": reason,
+#             "BP": "",
+#             "BPM": "",
+#             "OxySat": "",
+#             "DocNotes": ""
+#             }
+        
+#     except Exception as e:
+#         print(e)
+#         return False
+
+    # return True

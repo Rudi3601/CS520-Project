@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateLogin(event) {
+          event.preventDefault();
+    
+          // Get input values
+          var doctorID = document.getElementById('username').value;
+          var password = document.getElementById('password').value;
+    
+          // Check credentials
+          if (doctorID === 'patientid' && password === '1234') {
+            // Redirect to another HTML form
+            window.location.href = 'patient-portal.html';
+          } else {
+            // Display an error message (you can customize this part)
+            alert('Invalid credentials. Please try again.');
+          }
+        }
+      </script>
+    
 </head>
 <body>
     <div class="container">
         <h1>Patient Login</h1>
-        <form action="process-patient-login.php" method="post">
+        <form onsubmit="validateLogin(event)">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 

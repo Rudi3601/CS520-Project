@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #logout {
+            width: 10%;
+            position: absolute;
+            top: 40%;
+            left: 5%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Dr. Smith's Weekly Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10 am</td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+            </tr>
+            <tr>
+                <td>11 am</td>
+                <td><button disabled>Occupied</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+            </tr>
+            <tr>
+                <td>12 pm</td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button disabled>Occupied</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+            </tr>
+            <tr>
+                <td>1 pm</td>
+                <td><button onclick="submitAppointment()"">Available</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+                <td><button disabled>Occupied</button></td>
+                <td><button disabled>Occupied</button></td>
+                <td><button onclick="submitAppointment()">Available</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button id="logout" onclick="goback()">Go Back</button>
+    <script>
+        function submitAppointment() {
+            // Replace '#' with the actual URL you want to redirect to
+            alert("Your Appointment has been successfully submitted. A confirmation email will be sent to you shortly.")
+        }
+        function redirectToSecondForm() {
+            // Redirect to another HTML form
+            window.location.href = 'doctor-appt-view.html';
+        }
+
+        function goback() {
+            // Redirect to another HTML form
+            window.location.href = 'patient-portal.html';
+        }
+    </script>
+</body>
+</html>

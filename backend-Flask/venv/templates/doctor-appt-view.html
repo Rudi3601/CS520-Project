@@ -95,6 +95,16 @@
         document.getElementById('appointmentTime').textContent = appointmentInfo.time;
     }
 
+    function showAlert() {
+      // Display an alert message
+      alert('The current visit has been saved');
+      return false;
+    }
+    function redirectToSecondForm() {
+            // Redirect to another HTML form
+            window.location.href = 'doctor-dashboard.html';
+        }
+
 </script>
 <body>
     <div>
@@ -159,13 +169,17 @@
                 <br>
                 <br>
     
-            <button type="submit">Save Information</button>
         </form>
+        <button onclick="showAlert()">Save Information</button>
         <!-- Button to link to the "Past Visits" page -->
+        <br>
+        <br>
         <br>
         <a href="medical_history_record.html">
             <button>Past Visits</button>
         </a>
+        <button onclick="redirectToSecondForm()">Go Back</button>
+
     </div>
 </body>
 </html>

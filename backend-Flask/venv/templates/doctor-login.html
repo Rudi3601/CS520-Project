@@ -4,22 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; */
+            align-items: center; */
+            height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            width:85%;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            max-width: 300px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Doctor Login</h1>
-        <form action="process-doctor-login.php" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <div class="secondary">
+            <h2>Doctor Login</h2>
+        </div>
+
+
+        <form id="loginForm" onsubmit="validateLogin(event)">
+            <label for="doctorID">Doctor ID:</label>
+            <input type="text" id="doctorID" name="doctorID" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">Login</button>
+            <input type="submit" value="Login">
         </form>
-
-        <p>Not a doctor? <a href="patient-login.html">Login as a patient</a></p>
     </div>
+
+  <script>
+    function validateLogin(event) {
+      event.preventDefault();
+
+      // Get input values
+      var doctorID = document.getElementById('doctorID').value;
+      var password = document.getElementById('password').value;
+
+      // Check credentials
+      if (doctorID === 'doctorid' && password === '1234') {
+        // Redirect to another HTML form
+        window.location.href = 'doctor-dashboard.html';
+      } else {
+        // Display an error message (you can customize this part)
+        alert('Invalid credentials. Please try again.');
+      }
+    }
+  </script>
+
 </body>
 </html>

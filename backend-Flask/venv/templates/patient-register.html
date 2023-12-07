@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='patient-register.css') }}">
+    <link rel="stylesheet" href="patient-register.css">
     <script>
         function validateName() {
             var nameInput = document.getElementById("name");
@@ -73,12 +73,16 @@
                 // Submit the form
             return true; // Allow form submission
         }
+        function redirectToSecondForm() {
+            // Redirect to another HTML form
+            window.location.href = 'patient-login.html';
+        }
     </script>
 </head>
 <body>
     <div class="container">
         <h1>Patient Registration</h1>
-        <form id="registration-form" action="/Patient_reg_submit" method="post" onsubmit="return validateForm()">
+        <form id="registration-form">
             <label for="name">Legal Name:</label>
             <input type="text" id="name" name="name" oninput="validateName()" required>
             
@@ -107,10 +111,10 @@
             <label for="conditions">History of Medical Conditions:</label>
             <textarea id="conditions" name="conditions" rows="4" required></textarea>
 
-            <button type="submit">Register</button>
         </form>
+        <button onclick="redirectToSecondForm()">Register</button>
 
-        <p>Already registered? <a href="/patient_login">Login as a patient</a></p>
+        <p>Already registered? <a href="patient-login.html">Login as a patient</a></p>
     </div>
 </body>
 </html>

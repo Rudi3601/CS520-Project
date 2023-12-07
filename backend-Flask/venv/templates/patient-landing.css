@@ -1,0 +1,60 @@
+/* Reset some default styles */
+body,
+h1,
+p,
+table {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  background-color: #f8f8f8;
+  color: #333;
+  margin: 20px;
+}
+
+h2 {
+  color: #007bff;
+}
+
+/* Style the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  table {
+    font-size: 14px;
+  }
+}

@@ -227,6 +227,12 @@
             });
         });
     }
+
+    function redirectToSecondForm() {
+            // Redirect to another HTML form
+            window.location.href = 'doctor-appt-view.html';
+    }
+
     window.onload = function() {
         renderPatientInfo();
         renderPatientVisits();
@@ -255,6 +261,8 @@
         <canvas id="oxygenSaturationChart"></canvas>
     </div>
 
+    <button onclick="redirectToSecondForm()">Go Back</button>
+    
 
 </body>
 </html>

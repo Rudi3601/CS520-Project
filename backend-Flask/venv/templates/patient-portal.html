@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal</title>
+    <link rel="stylesheet" href="PatientPortal.css">
+</head>
+<body>
+
+    <header>
+        <h1>Patient Portal</h1>
+    </header>
+
+    <div class="patient-details">
+        <h2>Patient Details</h2>
+        <p><strong>Name:</strong> <span contenteditable="true">John Doe</span></p>
+        <p><strong>Date of Birth:</strong> <span contenteditable="true">January 1, 1980</span></p>
+        <p><strong>Medication History:</strong> <span contenteditable="true">Aspirin, Ibuprofen</span></p>
+        <p><strong>Current Appointments:</strong> <span contenteditable="true">Checkup on December 10, 2023 with Dr. Smith</span></p>
+        <p><strong>Allergies:</strong> <span contenteditable="true">None</span></p>
+
+        <button class="btn" onclick="editInformation()">Update Information</button>
+        <button class="btn" onclick="requestAppointment()">Request Appointment</button>
+        <br>
+        <button class="btn" onclick="logout()">Log out</button>
+    </div>
+
+    <script>
+        function editInformation() {
+            // Add logic to switch to edit mode
+            const editableFields = document.querySelectorAll('.patient-details span[contenteditable="true"]');
+            editableFields.forEach(field => field.setAttribute('contenteditable', 'true'));
+        }
+
+        function requestAppointment() {
+            // Add logic to navigate to the appointment request page
+            window.location.href = 'patient-landing.html';
+            // You can use window.location.href = 'appointment-request.html'; to navigate to a new page
+        }
+        function logout() {
+            // Redirect to another HTML form
+            window.location.href = 'welcome.html';
+        }
+    </script>
+
+</body>
+</html>

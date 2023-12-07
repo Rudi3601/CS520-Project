@@ -1,7 +1,5 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import bcrypt
-import json
 from cryptography.fernet import Fernet
 # Replace the placeholder with your Atlas connection string
 uri = "mongodb+srv://super:superuser@atlascluster.j0uq5ga.mongodb.net/?retryWrites=true&w=majority"
@@ -397,3 +395,51 @@ def update_schedule(schedule):
 #     print(get_doctor_schedule(1), "\n ,get_doctor_schedule(1)")
 # except Exception as e:
 #     print(e)
+
+#patient books an appointment
+def book_appointment(doctor_id, patient_id, day, hour):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['schedule']
+    
+    try:
+        schedule = collection.find_one({"DoctorID": doctor_id})
+        if schedule[day][hour] != "":
+            return False
+        
+        schedule[day][hour] = patient_id
+        collection.update_one({"DoctorID": doctor_id}, {"$set": schedule})
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+# try:
+#     print(book_appointment(2, "darshuser", "Monday", "9-10"))
+# except Exception as e:
+#     print(e)
+
+# appointments CRUD
+# def create_appointment(patientID, doctorID, reason, day, time):
+#     client = MongoClient(uri, server_api=ServerApi('1'))
+#     db = client['test']
+#     collection = db['appointments']
+
+#     try:
+#         appointment = {
+#             "PatientID": patientID, 
+#             "DoctorID": doctorID, 
+#             "Day": day, 
+#             "Time": time,
+#             "Reason": reason,
+#             "BP": "",
+#             "BPM": "",
+#             "OxySat": "",
+#             "DocNotes": ""
+#             }
+        
+#     except Exception as e:
+#         print(e)
+#         return False
+
+    # return True

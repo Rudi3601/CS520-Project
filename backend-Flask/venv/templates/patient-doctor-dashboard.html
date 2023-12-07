@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Schedule</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weekly Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>8 am</td>
+                <td><button onclick="redirectToPage('Monday 8-9')" {% if doctor_info['Schedule']['Monday']['8-9'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 8-9')" {% if doctor_info['Schedule']['Tuesday']['8-9'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 8-9')" {% if doctor_info['Schedule']['Wednesday']['8-9'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 8-9')" {% if doctor_info['Schedule']['Thursday']['8-9'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 8-9')" {% if doctor_info['Schedule']['Friday']['8-9'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>9 am</td>
+                <td><button onclick="redirectToPage('Monday 9-10')" {% if doctor_info['Schedule']['Monday']['9-10'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 9-10')" {% if doctor_info['Schedule']['Tuesday']['9-10'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 9-10')" {% if doctor_info['Schedule']['Wednesday']['9-10'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 9-10')" {% if doctor_info['Schedule']['Thursday']['9-10'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 9-10')" {% if doctor_info['Schedule']['Friday']['9-10'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>10 am</td>
+                <td><button onclick="redirectToPage('Monday 10-11')" {% if doctor_info['Schedule']['Monday']['10-11'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 10-11')" {% if doctor_info['Schedule']['Tuesday']['10-11'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 10-11')" {% if doctor_info['Schedule']['Wednesday']['10-11'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 10-11')" {% if doctor_info['Schedule']['Thursday']['10-11'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 10-11')" {% if doctor_info['Schedule']['Friday']['10-11'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>11 am</td>
+                <td><button onclick="redirectToPage('Monday 11-12')" {% if doctor_info['Schedule']['Monday']['11-12'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 11-12')" {% if doctor_info['Schedule']['Tuesday']['11-12'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 11-12')" {% if doctor_info['Schedule']['Wednesday']['11-12'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 11-12')" {% if doctor_info['Schedule']['Thursday']['11-12'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 11-12')" {% if doctor_info['Schedule']['Friday']['11-12'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>12 pm</td>
+                <td><button onclick="redirectToPage('Monday 12-13')" {% if doctor_info['Schedule']['Monday']['12-13'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 12-13')" {% if doctor_info['Schedule']['Tuesday']['12-13'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 12-13')" {% if doctor_info['Schedule']['Wednesday']['12-13'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 12-13')" {% if doctor_info['Schedule']['Thursday']['12-13'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 12-13')" {% if doctor_info['Schedule']['Friday']['12-13'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>1 pm</td>
+                <td><button onclick="redirectToPage('Monday 13-14')" {% if doctor_info['Schedule']['Monday']['13-14'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 13-14')" {% if doctor_info['Schedule']['Tuesday']['13-14'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 13-14')" {% if doctor_info['Schedule']['Wednesday']['13-14'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 13-14')" {% if doctor_info['Schedule']['Thursday']['13-14'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 13-14')" {% if doctor_info['Schedule']['Friday']['13-14'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>2 pm</td>
+                <td><button onclick="redirectToPage('Monday 14-15')" {% if doctor_info['Schedule']['Monday']['14-15'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 14-15')" {% if doctor_info['Schedule']['Tuesday']['14-15'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 14-15')" {% if doctor_info['Schedule']['Wednesday']['14-15'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 14-15')" {% if doctor_info['Schedule']['Thursday']['14-15'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 14-15')" {% if doctor_info['Schedule']['Friday']['14-15'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>3 pm</td>
+                <td><button onclick="redirectToPage('Monday 15-16')" {% if doctor_info['Schedule']['Monday']['15-16'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 15-16')" {% if doctor_info['Schedule']['Tuesday']['15-16'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 15-16')" {% if doctor_info['Schedule']['Wednesday']['15-16'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 15-16')" {% if doctor_info['Schedule']['Thursday']['15-16'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 15-16')" {% if doctor_info['Schedule']['Friday']['15-16'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>4 pm</td>
+                <td><button onclick="redirectToPage('Monday 16-17')" {% if doctor_info['Schedule']['Monday']['16-17'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 16-17')" {% if doctor_info['Schedule']['Tuesday']['16-17'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 16-17')" {% if doctor_info['Schedule']['Wednesday']['16-17'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 16-17')" {% if doctor_info['Schedule']['Thursday']['16-17'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 16-17')" {% if doctor_info['Schedule']['Friday']['16-17'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+            <tr>
+                <td>5 pm</td>
+                <td><button onclick="redirectToPage('Monday 17-18')" {% if doctor_info['Schedule']['Monday']['17-18'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Tuesday 17-18')" {% if doctor_info['Schedule']['Tuesday']['17-18'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Wednesday 17-18')" {% if doctor_info['Schedule']['Wednesday']['17-18'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Thursday 17-18')" {% if doctor_info['Schedule']['Thursday']['17-18'] != '' %}disabled{% endif %}>Patient</button></td>
+                <td><button onclick="redirectToPage('Friday 17-18')" {% if doctor_info['Schedule']['Friday']['17-18'] != '' %}disabled{% endif %}>Patient</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function redirectToPage(name) {
+            // Replace '#' with the actual URL you want to redirect to
+            //window.location.href = '/doctor_appt_'+String(doctor_info["id"])+'/' + encodeURIComponent(name);
+            window.location.href = '/patient_appt/' + encodeURIComponent(name);
+        }
+    </script>
+</body>
+</html>

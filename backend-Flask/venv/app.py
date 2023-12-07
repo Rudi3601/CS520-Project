@@ -85,10 +85,23 @@ def patient_login_submit():
         status = patient_login(username,pwd)
         print(username,pwd)
         print(status)
+        
         if(status):
-            return """<html>Welcome Patient</html>"""
+            del status["_id"]
+            del status["password"]
+            del status["hash_key"]
+            status["CurrentAppointment"] = "None"
+            return redirect(url_for('patient_portal',user_details=status))
         else:
             return """<html>Wrong username or password</html>"""
+
+@app.route("/PatientPortal",methods=["GET","POST"])
+def patient_portal():
+    user_details = request.args.get("user_details")
+    user_details = eval(user_details)
+    session["patient"] = user_details["username"]
+    return render_template("PatientPortal.html",user_details=user_details)
+
 
 @app.route("/patient_register_userexist")
 def patient_register_userexist():
@@ -125,6 +138,15 @@ def new_patient_submit():
         else:
             return redirect(url_for('patient_register_userexist'))
 
+@app.route("/patient-doctor-dashboard/<doctor_id>")
+def patient_doctor_dashboard(doctor_id):
+    session["d_id"] = int(doctor_id)
+    schedule = get_doctor_schedule(int(doctor_id))
+    return render_template("patient-doctor-dashboard.html",doctor_info=schedule)
+
+@app.route("/DoctorList")
+def doctor_list():
+    return render_template("DoctorList.html")
 
 @app.route("/doctor_portal",methods=["GET","POST"])
 def doctor_portal():
@@ -135,6 +157,29 @@ def doctor_portal():
     schedule = get_doctor_schedule(int(doctor_info))
     #print(doctor_info,schedule)
     return render_template("doctor-dashboard.html",doctor_info=schedule) 
+
+@app.route("/patient_appt/<appt>")
+def patient_appt(appt):
+    decoded_string = unquote(appt)
+    Day,time = decoded_string.split(" ")
+    user_details = get_patient(session.get("patient"))
+    status = book_appointment(session.get("d_id"),user_details["username"],Day,time,"fever")
+    if(status):
+        if(int(session.get("d_id"))==1):
+            d_name = "Dr.Heather Conboy"
+        elif(int(session.get("d_id"))==2):
+            d_name = "Dr.David McManus"
+        elif(int(session.get("d_id"))==3):
+            d_name = "Dr.Hui Guan"   
+        user_details["CurrentAppointment"] = Day+" "+time+" with " + d_name
+        del user_details["_id"]
+        del user_details["password"]
+        del user_details["hash_key"]
+
+        return redirect(url_for('patient_portal',user_details = user_details))
+
+    else:
+        return """Not able to book appointment"""
 
 @app.route("/doctor_appt_view/<appt>")
 def doctor_appt_view(appt):
@@ -149,6 +194,8 @@ def doctor_appt_view(appt):
     del user_details["password"]
     del user_details["hash_key"]
     #user_details["_id"] = str(user_details["_id"])
+    user_details["day"] = Day
+    user_details["time"] =time
     for key in user_details:
         print(f"{key}:{type(user_details[key])}")
     return render_template("doctor-appt-view.html",user_details = user_details)
@@ -156,6 +203,36 @@ def doctor_appt_view(appt):
 @app.route("/doctor_logout",methods=["GET","POST"])
 def doctor_logout():
     session.pop('doctor', None)
+    return redirect(url_for('welcome_page')) 
+
+@app.route("/appt_submit/<day_time>",methods=["GET","POST"])
+def appt_submit(day_time):
+    bp=request.form['bloodPressure']
+    bpm = request.form['heartRate']
+    oxysat = request.form["OxySat"]
+    notes = request.form["notes"]
+    decoded_string = unquote(day_time)
+    Day,time = decoded_string.split(" ")
+    d_id = session.get("doctor")
+    print(d_id, Day, time)
+    patient = get_appointment(session.get("doctor"), Day, time)
+    
+    status = update_appointment(session.get("doctor"), Day, time, bp=bp, bpm=bpm, oxysat=oxysat, docnotes=notes)
+    if(status):
+        return redirect(url_for('doctor_portal',doctor_info = session.get("doctor")))
+    else:
+        return """Error"""
+
+@app.route("/medical_history_record/<patient_id>",methods=["GET","POST"])
+def medical_history(patient_id):
+    appointments = get_all_appointments(patient_id)
+    if(appointments):
+        return render_template("medical_history_record.html",patient_details = appointments)
+
+@app.route("/patient_logout",methods=["GET","POST"])
+def patient_logout():
+    session.pop('patient', None)
+    session.pop("d_id",None)
     return redirect(url_for('welcome_page')) 
      
 # Running app

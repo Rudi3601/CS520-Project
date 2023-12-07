@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doctor List</title>
-  <link rel="stylesheet" href="DoctorList.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='DoctorList.css') }}">
 </head>
 <body>
 
@@ -25,12 +25,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><a href="doctor_page.html?doctor=DrSmith">Dr. Smith</a></td>
-        <td>Cardiologist</td>
+        <td><a href="/patient-doctor-dashboard/1">Dr. Heather Conboy</a></td>
+        <td>Neurology</td>
       </tr>
       <tr>
-        <td><a href="doctor_page.html?doctor=DrJohnson">Dr. Johnson</a></td>
-        <td>Orthopedic Surgeon</td>
+        <td><a href="/patient-doctor-dashboard/2">Dr. David McManus</a></td>
+        <td>Cardiology</td>
+      </tr>
+      <tr>
+        <td><a href="/patient-doctor-dashboard/3">Dr. Hui Guan</a></td>
+        <td>Pediatrics</td>
       </tr>
       <!-- Add more rows for other doctors -->
     </tbody>

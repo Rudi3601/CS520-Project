@@ -481,7 +481,7 @@ def update_appointment(doctor_id, day, hour, bp="", bpm="", oxysat="", docnotes=
     
     try:
         patient = get_appointment(doctor_id, day, hour)
-        
+        print(patient)
         appointment = collection.find_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour})
         appointment['BP'] = bp if appointment['BP'] == "" and bp != "" else ""
         appointment['BPM'] = bpm if appointment['BPM'] == "" and bpm != "" else ""

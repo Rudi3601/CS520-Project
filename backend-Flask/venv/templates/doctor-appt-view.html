@@ -84,8 +84,8 @@
         };
 
         var appointmentInfo = {
-            date: "January 1, 2022",
-            time: "9:00AM"
+            date: user_details.day,
+            time: user_details.time
         }
 
         document.getElementById('name').textContent = patientInfo.name;
@@ -94,6 +94,8 @@
         document.getElementById('medicalHistory').textContent = patientInfo.medicalHistory;
         document.getElementById('appointmentDate').textContent = appointmentInfo.date;
         document.getElementById('appointmentTime').textContent = appointmentInfo.time;
+        document.getElementById("appointmentRecord").action = "/appt_submit/"+encodeURIComponent(appointmentInfo.date+" "+appointmentInfo.time)
+        document.getElementById("myLink").href  = '/medical_history_record/' + patientInfo.username;
     }
 
 </script>
@@ -125,7 +127,7 @@
         </div>
 
         <div class="info-section">
-            <labe class="info"l>Medical History:</label>
+            <label class="info">Medical History:</label>
             <span id="medicalHistory"></span>
         </div>
 
@@ -148,8 +150,8 @@
                 <br>
                 <br>
 
-                <label class="enter">Symptoms:</label>
-                <textarea id="symptoms" name="symptoms" rows="4"></textarea>
+                <label class="enter">Oxygen Saturation:</label>
+                <textarea id="OxySat" name="OxySat" rows="4"></textarea>
 
                 <br>
                 <br>
@@ -164,7 +166,7 @@
         </form>
         <!-- Button to link to the "Past Visits" page -->
         <br>
-        <a href="medical_history_record.html">
+        <a id="myLink" href="/medical_history_record">
             <button>Past Visits</button>
         </a>
     </div>

@@ -4,39 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Portal</title>
-    <link rel="stylesheet" href="PatientPortal.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='PatientPortal.css') }}">
 </head>
+<script>
+    function editInformation() {
+        // Add logic to switch to edit mode
+        const editableFields = document.querySelectorAll('.patient-details span[contenteditable="true"]');
+        editableFields.forEach(field => field.setAttribute('contenteditable', 'true'));
+    }
+
+    function requestAppointment() {
+        // Add logic to navigate to the appointment request page
+        //alert('Redirecting to Appointment Request Page');
+        // You can use window.location.href = 'appointment-request.html'; to navigate to a new page
+        window.location.href = '/DoctorList';
+    }
+
+    window.onload = function() {
+    var user_details = {{ user_details | tojson}};
+    // BACKEND DATA
+    var patientInfo = {
+    name: user_details.name,
+    dob: user_details.DOB,
+    allergies: user_details.allergies,
+    medicalHistory: user_details.history,
+    appointment: user_details.CurrentAppointment
+    };
+
+    var appointmentInfo = {
+        date: user_details.day,
+        time: user_details.time
+    }
+
+    document.getElementById('name').textContent = patientInfo.name;
+    document.getElementById('dob').textContent = patientInfo.dob;
+    document.getElementById('allergies').textContent = patientInfo.allergies;
+    document.getElementById('medicalHistory').textContent = patientInfo.medicalHistory;
+    document.getElementById('CurrentAppointment').textContent = patientInfo.appointment;
+    //document.getElementById('appointmentDate').textContent = appointmentInfo.date;
+    //document.getElementById('appointmentTime').textContent = appointmentInfo.time;
+}
+</script>
 <body>
 
     <header>
         <h1>Patient Portal</h1>
     </header>
 
-    <div class="patient-details">
-        <h2>Patient Details</h2>
-        <p><strong>Name:</strong> <span contenteditable="true">John Doe</span></p>
-        <p><strong>Date of Birth:</strong> <span contenteditable="true">January 1, 1980</span></p>
-        <p><strong>Medication History:</strong> <span contenteditable="true">Aspirin, Ibuprofen</span></p>
-        <p><strong>Current Appointments:</strong> <span contenteditable="true">Checkup on December 10, 2023 with Dr. Smith</span></p>
-        <p><strong>Allergies:</strong> <span contenteditable="true">None</span></p>
+        <div class="info-section">
+            <label class="info">Name:</label>
+            <span id="name"></span>
+        </div>
 
-        <button class="btn" onclick="editInformation()">Update Information</button>
+        <div class="info-section">
+            <label class="info">Date of Birth:</label>
+            <span id="dob"></span>
+        </div>
+
+        <div class="info-section">
+            <label class="info">Allergies:</label>
+            <span id="allergies"></span>
+        </div>
+
+        <div class="info-section">
+            <label class="info">Medical History:</label>
+            <span id="medicalHistory"></span>
+        </div>
+
+        <div class="info-section">
+            <label class="info">Current Appointment:</label>
+            <span id="CurrentAppointment"></span>
+        </div>
+
+        <!---<button class="btn" onclick="editInformation()">Update Information</button>--->
         <button class="btn" onclick="requestAppointment()">Request Appointment</button>
     </div>
 
-    <script>
-        function editInformation() {
-            // Add logic to switch to edit mode
-            const editableFields = document.querySelectorAll('.patient-details span[contenteditable="true"]');
-            editableFields.forEach(field => field.setAttribute('contenteditable', 'true'));
-        }
-
-        function requestAppointment() {
-            // Add logic to navigate to the appointment request page
-            alert('Redirecting to Appointment Request Page');
-            // You can use window.location.href = 'appointment-request.html'; to navigate to a new page
-        }
-    </script>
+    <form action="{{ url_for('patient_logout') }}" method="post">
+        <button type="submit">Logout</button>
+    </form>
 
 </body>
 </html>

@@ -396,15 +396,23 @@ def update_schedule(schedule):
 # except Exception as e:
 #     print(e)
 
-#patient books an appointment
-def book_appointment(doctor_id, patient_id, day, hour):
+
+# APPOINTMENTS CRUD
+
+# patient books an appointment
+# type signature -> book_appointment(doctor_id: int, patient_id: str, day: str, hour: str, reason: str) -> bool
+def book_appointment(doctor_id, patient_id, day, hour, reason):
     client = MongoClient(uri, server_api=ServerApi('1'))
     db = client['test']
     collection = db['schedule']
     
     try:
         schedule = collection.find_one({"DoctorID": doctor_id})
+        print(schedule)
         if schedule[day][hour] != "":
+            return False
+        
+        if not create_appointment(doctor_id, patient_id, day, hour, reason):
             return False
         
         schedule[day][hour] = patient_id
@@ -414,32 +422,96 @@ def book_appointment(doctor_id, patient_id, day, hour):
         print(e)
         return False
 
+# only used by book_appointment: STAY AWAY
+# type signature -> create_appointment(doctor_id: int, patient_id: str, day: str, hour: str, reason: str) -> bool
+def create_appointment(doctor_id, patient_id, day, hour, reason):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['appointments']
+
+    try:
+        appointment = {
+            "PatientID": patient_id, 
+            "DoctorID": doctor_id, 
+            "Day": day, 
+            "Time": hour,
+            "Reason": reason,
+            "BP": "",
+            "BPM": "",
+            "OxySat": "",
+            "DocNotes": ""
+        }
+        
+        collection.insert_one(appointment)
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+
+# Test for book_appointment and create_appointment
 # try:
-#     print(book_appointment(2, "darshuser", "Monday", "9-10"))
+#     print(book_appointment(2, "darshuser", "Tuesday", "9-10", "Regular check up"))
 # except Exception as e:
 #     print(e)
 
-# appointments CRUD
-# def create_appointment(patientID, doctorID, reason, day, time):
-#     client = MongoClient(uri, server_api=ServerApi('1'))
-#     db = client['test']
-#     collection = db['appointments']
-
-#     try:
-#         appointment = {
-#             "PatientID": patientID, 
-#             "DoctorID": doctorID, 
-#             "Day": day, 
-#             "Time": time,
-#             "Reason": reason,
-#             "BP": "",
-#             "BPM": "",
-#             "OxySat": "",
-#             "DocNotes": ""
-#             }
+# get all appointments for a doctor
+# type signature -> get_appointments(doctor_id: int) -> list(dict(PatientID: int, DoctorID: int, Day: str, Time: str, Reason: str))
+def get_appointment(doctor_id, day, hour):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['schedule']
+    
+    try:
+        doctor_schedule = collection.find_one({"DoctorID": doctor_id})
+        patient = doctor_schedule[day][hour]
         
-#     except Exception as e:
-#         print(e)
-#         return False
+        return patient
+    except Exception as e:
+        print(e)
+        return None
+        
+# update_appointment -> update appointment info from the DOCTOR side
+# Doctor clicks on appointment -> form to fill out BP, BPM, OxySat, DocNotes -> update_appointment
+# type signature -> update_appointment(doctor_id: int, day: str, hour: str, bp: str, bpm: str, oxysat: str, docnotes: str) -> bool
+def update_appointment(doctor_id, day, hour, bp="", bpm="", oxysat="", docnotes=""):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['appointments']
+    
+    try:
+        patient = get_appointment(doctor_id, day, hour)
+        
+        appointment = collection.find_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour})
+        appointment['BP'] = bp if appointment['BP'] == "" and bp != "" else ""
+        appointment['BPM'] = bpm if appointment['BPM'] == "" and bpm != "" else ""
+        appointment['OxySat'] = oxysat if appointment['OxySat'] == "" and oxysat != "" else ""
+        appointment['DocNotes'] = docnotes if appointment['DocNotes'] == "" and docnotes != "" else ""
+        
+        collection.update_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour}, {"$set": appointment})
+        return True
+    except Exception as e:
+        print(e)
+        return False
+    
+# try:
+#     print(update_appointment(2, "Tuesday", "9-10", "120/110", "55", "100"))
+# except Exception as e:
+#     print(e)
 
-    # return True
+def get_all_appointments(patient_id):
+    client = MongoClient(uri, server_api=ServerApi('1'))
+    db = client['test']
+    collection = db['appointments']
+    
+    try:
+        appointments = collection.find({"PatientID": patient_id})
+        return appointments
+    except Exception as e:
+        print(e)
+        return None
+    
+# try: 
+#     print(get_all_appointments("darshuser"))
+# except Exception as e:
+#     print(e)

@@ -9,7 +9,7 @@ UMass CS520 Fall 2023 Project
 - add_patient to register user
 - patient_login to authenticate user
 - applied fernet class from cryptography module for authentication security
-- tests for CRUD operations located under the function in commented try-except=
+- tests for CRUD operations located under the function in commented try-except
 
 #### Doctor Login/Register:
 - doctor_exists to check if the doctor with the given username exists
@@ -20,11 +20,27 @@ UMass CS520 Fall 2023 Project
 
 #### Schedule CRUD: 
 - Create schedule
-- get_schedule by DoctorID
+- get_doctor_schedule by DoctorID
 - update_schedule
 - tests for CRUD operations located under the function in commented try-except
 
-DataBase Structure:
+#### Appointments CRUD:
+- book_appointment with doctor_id, patient_id, day, hour, reason
+    - Add appointment to doctor schedule
+    - create_appointment
+        - add appointment to the appointments table, partial information
+- get_appointment with doctor_id, day, hour
+- update_appointment
+    - During the visit, doctor can update the appointments table with:
+        - Blood pressure
+        - Beats per minute
+        - Oxygen Saturation
+        - Doctor Notes
+- get_all_appointments with patient_id
+    - Patient's history of appointments with all information in the form of a list of objects for all the visits regardless of the doctor, iterable and unwrappable with a for loop
+- tests for CRUD operations located under the function in the commented try-except
+
+### DataBase Structure:
 - MainDB:
     - doctors collection
         - Document
@@ -44,7 +60,6 @@ DataBase Structure:
             - key
             - history
             - allergies
-
     - schedule collection
         - Document
             - DoctorID
@@ -60,3 +75,14 @@ DataBase Structure:
                 - ...
             - Friday
                 - ...
+    - appointments collection
+        - Document
+            - DoctorID
+            - PatientID
+            - Day
+            - Time
+            - Reason
+            - BP
+            - BPM
+            - OxySat
+            - DocNotes

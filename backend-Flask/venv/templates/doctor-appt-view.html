@@ -51,13 +51,14 @@
         var bloodPressureUpperInput = document.getElementById('bloodPressureUpper').value;
         var bloodPressureLowerInput = document.getElementById('bloodPressureLower').value;
         var heartRateInput = document.getElementById('heartRate').value;
-        var symptomsInput = document.getElementById('symptoms').value;
+        var oxygenSatInput = document.getElementById('oxySat').value;
+        var reasonInput = document.getElementById('reasons').value;
         var notesInput = document.getElementById('notes').value;
 
         if (bloodPressureUpperInput.trim() === '' 
             && bloodPressureLowerInput.trim() === ''
             && heartRateInput.trim() === '' 
-            && symptomsInput.trim() === '' 
+            && reasonInput.trim() === ''
             && notesInput.trim() === '') {
             alert("Please enter information for the current appointment.");
             return false; // Prevent form submission
@@ -77,6 +78,11 @@
         // Check if the input is a valid integer or float
         if (heartRateInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(heartRateInput)) {
             alert("Heart Rate must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        if (oxygenSatInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(heartRateInput)) {
+            alert("Oxygen saturation must be a valid integer or float.");
             return false; // Prevent form submission
         }
 
@@ -180,7 +186,13 @@
                 <br>
 
                 <label class="enter">Oxygen Saturation:</label>
-                <textarea id="OxySat" name="OxySat" rows="4"></textarea>
+                <input type="text" id="oxySat" name="oxySat">
+
+                <br>
+                <br>
+
+                <label class="enter">Reason(s) for visit:</label>
+                <textarea id="reasons" name="reasons" rows="2"></textarea>
 
                 <br>
                 <br>

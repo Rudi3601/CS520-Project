@@ -464,6 +464,7 @@ def get_appointment(doctor_id, day, hour):
     
     try:
         doctor_schedule = collection.find_one({"DoctorID": doctor_id})
+        # print(doctor_schedule)
         patient = doctor_schedule[day][hour]
         
         return patient
@@ -474,21 +475,26 @@ def get_appointment(doctor_id, day, hour):
 # update_appointment -> update appointment info from the DOCTOR side
 # Doctor clicks on appointment -> form to fill out BP, BPM, OxySat, DocNotes -> update_appointment
 # type signature -> update_appointment(doctor_id: int, day: str, hour: str, bp: str, bpm: str, oxysat: str, docnotes: str) -> bool
-def update_appointment(doctor_id, day, hour, bp="", bpm="", oxysat="", docnotes=""):
+def update_appointment(doctor_id, day, hour, bp="", bpm="", oxysat="", reasons="", docnotes=""):
     client = MongoClient(uri, server_api=ServerApi('1'))
     db = client['test']
     collection = db['appointments']
     
     try:
         patient = get_appointment(doctor_id, day, hour)
-        print(patient)
+        print("update_appointment, got patient username: " + patient)
         appointment = collection.find_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour})
+        print("Retriving the current appointment at update_appointment: ")
+        print(appointment)
         appointment['BP'] = bp if appointment['BP'] == "" and bp != "" else ""
         appointment['BPM'] = bpm if appointment['BPM'] == "" and bpm != "" else ""
         appointment['OxySat'] = oxysat if appointment['OxySat'] == "" and oxysat != "" else ""
         appointment['DocNotes'] = docnotes if appointment['DocNotes'] == "" and docnotes != "" else ""
-        
+        appointment['Reason'] = reasons if appointment['Reason'] == "" and reasons != "" else ""
+        print("Updated the current appointment at update_appointment: ")
+        print(appointment)
         collection.update_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour}, {"$set": appointment})
+        print("Updated successful!")
         return True
     except Exception as e:
         print(e)

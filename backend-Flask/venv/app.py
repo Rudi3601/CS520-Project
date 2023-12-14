@@ -70,6 +70,7 @@ def doctor_login_submit():
         #print(status)      
         if(status):
             session["doctor"] = status["DoctorID"]
+            print("session[doctor]: " + str(session["doctor"]))
             doctor_info = status["DoctorID"]
             print(f"Status:{doctor_info}")
             return redirect(url_for('doctor_portal',doctor_info=doctor_info))
@@ -154,6 +155,7 @@ def doctor_portal():
     #doctor_info = session.get("doctor")
     # Convert the string representation of the dictionary back to a dictionary
     #doctor_info = eval(doctor_info)
+    print("session[doctor] at doctor_portal: " + str(session["doctor"]))
     schedule = get_doctor_schedule(int(doctor_info))
     #print(doctor_info,schedule)
     return render_template("doctor-dashboard.html",doctor_info=schedule) 
@@ -183,6 +185,7 @@ def patient_appt(appt):
 
 @app.route("/doctor_appt_view/<appt>")
 def doctor_appt_view(appt):
+    print("session[doctor] at doctor_appt_view: " + str(session["doctor"]))
     decoded_string = unquote(appt)
     Day,time = decoded_string.split(" ")
     #print(Day,time)
@@ -211,18 +214,21 @@ def doctor_logout():
 @app.route("/appt_submit/<day_time>",methods=["GET","POST"])
 def appt_submit(day_time):
     bpUpper = request.form['bloodPressureUpper']
+    print("bpUpper: " + bpUpper)
     bpLower = request.form['bloodPressureLower']
     bp = bpUpper + "/" + bpLower
     bpm = request.form['heartRate']
-    oxysat = request.form["OxySat"]
+    oxysat = request.form["oxySat"]
+    reasons = request.form["reasons"]
     notes = request.form["notes"]
     decoded_string = unquote(day_time)
     Day,time = decoded_string.split(" ")
     d_id = session.get("doctor")
     print(d_id, Day, time)
     patient = get_appointment(session.get("doctor"), Day, time)
+    print(patient)
     
-    status = update_appointment(session.get("doctor"), Day, time, bp=bp, bpm=bpm, oxysat=oxysat, docnotes=notes)
+    status = update_appointment(session.get("doctor"), Day, time, bp=bp, bpm=bpm, oxysat=oxysat, reasons=reasons, docnotes=notes)
     if(status):
         return redirect(url_for('doctor_portal',doctor_info = session.get("doctor")))
     else:

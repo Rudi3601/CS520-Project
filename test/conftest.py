@@ -1,6 +1,6 @@
 import pytest
 import sys
-sys.path.append("../")
+sys.path.append("src/")
 from app import app as flask_app
 from flask import Flask
 from flask import Flask, render_template, request,jsonify,redirect, url_for,session

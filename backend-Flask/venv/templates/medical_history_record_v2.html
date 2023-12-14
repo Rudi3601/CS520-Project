@@ -104,8 +104,13 @@
         visitsContainer.innerHTML = "";
 
         // Loop through the patientData dictionary
-        for (const [visitDetails] of Object.entries(patientData)) {
-
+        // for (const [visitDetails] of Object.entries(patientData)) {
+        for (let i = 0; i < patientData.length; i++) {
+            var visitDetails = patientData[i];
+            console.log("Visit details");
+            console.log(visitDetails);
+            var currDay = visitDetails.Day;
+            var currTime = visitDetails.Time;
             const visitWrapper = document.createElement("div");
             visitWrapper.classList.add("visit-wrapper");
 
@@ -115,10 +120,13 @@
 
             // Create HTML content for the visit
             const visitHTML = `
-                <strong>Doctor ID:</strong> ${visitDetails.DoctorID}<br>
+                <strong>Day:</strong> ${visitDetails["Day"]}<br>
+                <strong>Time:</strong> ${visitDetails["Time"]}<br>
+                <strong>Doctor ID:</strong> ${visitDetails["DoctorID"]}<br>
                 <strong>Blood Pressure:</strong> ${visitDetails.BP}<br>
                 <strong>Heart Rate:</strong> ${visitDetails.BPM}<br>
                 <strong>Oxygen Saturation:</strong> ${visitDetails.OxySat}%<br>
+                <strong>Reason for visit:</strong> ${visitDetails.Reason}<br>
                 <strong>Doctor's Notes:</strong> ${visitDetails.DocNotes}<br>
             `;
 
@@ -128,16 +136,19 @@
             // Create a toggle button for the visit
             const toggleButton = document.createElement("button");
             toggleButton.classList.add("toggle-button");
-            toggleButton.textContent = `Expand Details of Visit on ${day}`;
+            //toggleButton.textContent = `Expand Details of Visit on ${currDay} at ${currTime}`;
+            toggleButton.textContent = `Expand Details of Visit ${i+1}`;
 
             // Add a click event listener to toggle the visibility and update the button text
             toggleButton.addEventListener("click", () => {
                 if (visitContainer.style.display === "none") {
                     visitContainer.style.display = "block";
-                    toggleButton.textContent = `Hide Details of Visit on ${day}`;
+                    //toggleButton.textContent = `Hide Details of Visit on ${currDay} at ${currTime}`;
+                    toggleButton.textContent = `Hide Details of Visit ${i+1}`;
                 } else {
                     visitContainer.style.display = "none";
-                    toggleButton.textContent = `Expand Details of Visit on ${day}`;
+                    //toggleButton.textContent = `Expand Details of Visit on ${currDay} at ${currTime}`;
+                    toggleButton.textContent = `Expand Details of Visit ${i+1}`;
                 }
             });
 

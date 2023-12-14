@@ -48,18 +48,28 @@
 <script language="javascript" type="text/javascript">
     function validateInput() {
         
-        var bloodPressureInput = document.getElementById('bloodPressure').value;
+        var bloodPressureUpperInput = document.getElementById('bloodPressureUpper').value;
+        var bloodPressureLowerInput = document.getElementById('bloodPressureLower').value;
         var heartRateInput = document.getElementById('heartRate').value;
         var symptomsInput = document.getElementById('symptoms').value;
         var notesInput = document.getElementById('notes').value;
 
-        if (bloodPressureInput.trim() === '' && heartRateInput.trim() === '' && symptomsInput.trim() === '' && notesInput.trim() === '') {
+        if (bloodPressureUpperInput.trim() === '' 
+            && bloodPressureLowerInput.trim() === ''
+            && heartRateInput.trim() === '' 
+            && symptomsInput.trim() === '' 
+            && notesInput.trim() === '') {
             alert("Please enter information for the current appointment.");
             return false; // Prevent form submission
         }
 
         // Check if the input is a valid integer or float
-        if (bloodPressureInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(bloodPressureInput)) {
+        if (bloodPressureUpperInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(bloodPressureUpperInput)) {
+            alert("Blood pressure must be a valid integer or float.");
+            return false; // Prevent form submission
+        }
+
+        if (bloodPressureLowerInput.trim() !== '' && !/^\d+(\.\d+)?$/.test(bloodPressureLowerInput)) {
             alert("Blood pressure must be a valid integer or float.");
             return false; // Prevent form submission
         }
@@ -148,13 +158,20 @@
         <h2>Doctor's Inputs</h2>
         
         <form id="appointmentRecord" action="/submit" method="post" onsubmit="return validateInput()">
-                <label class="enter">Blood Pressure:</label>
-                <input type="text" id="bloodPressure" name="bloodPressure">
+                <label class="enter">Blood Pressure(upper):</label>
+                <input type="text" id="bloodPressureUpper" name="bloodPressureUpper">
                 mmHg
 
                 <br>
                 <br>
 
+                <label class="enter">Blood Pressure(lower):</label>
+                <input type="text" id="bloodPressureLower" name="bloodPressureLower">
+                mmHg
+
+                <br>
+                <br>
+                
                 <label class="enter">Heart Rate:</label>
                 <input type="text" id="heartRate" name="heartRate">
                 bpm

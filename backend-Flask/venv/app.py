@@ -210,7 +210,9 @@ def doctor_logout():
 
 @app.route("/appt_submit/<day_time>",methods=["GET","POST"])
 def appt_submit(day_time):
-    bp=request.form['bloodPressure']
+    bpUpper = request.form['bloodPressureUpper']
+    bpLower = request.form['bloodPressureLower']
+    bp = bpUpper + "/" + bpLower
     bpm = request.form['heartRate']
     oxysat = request.form["OxySat"]
     notes = request.form["notes"]

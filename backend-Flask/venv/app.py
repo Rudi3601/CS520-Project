@@ -185,17 +185,15 @@ def patient_appt(appt):
 
 @app.route("/doctor_appt_view/<appt>")
 def doctor_appt_view(appt):
-    print("session[doctor] at doctor_appt_view: " + str(session["doctor"]))
+    #print("session[doctor] at doctor_appt_view: " + str(session["doctor"]))
     decoded_string = unquote(appt)
     Day,time = decoded_string.split(" ")
     #print(Day,time)
     #schedule = get_doctor_schedule(id)
-    print("session.get(<doctor>): " + str(session.get("doctor")))
+    #print("session.get(<doctor>): " + str(session.get("doctor")))
     schedule = get_doctor_schedule(session.get("doctor"))
-    try:
-        user_details = get_patient(schedule["Schedule"][Day][time])
-    except Exception as e:
-        print(e)
+    user_details = get_patient(schedule["Schedule"][Day][time])
+
     del user_details["_id"]
     del user_details["password"]
     del user_details["hash_key"]

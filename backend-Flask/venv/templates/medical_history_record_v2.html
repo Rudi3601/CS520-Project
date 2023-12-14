@@ -59,10 +59,11 @@
     // Mock data, should retrieve from Backend
 
     const patientName = "John Doe";
-    var patientData_v2 = {{ patient_details_and_appt | tojson}};
-    var day = patientData_v2[0]
-    var time = patientData_v2[1]
-    var patientData = patientData_v2[2]
+    var patientData = {{ appts | safe }};
+    var day = "{{ day }}";
+    var time = "{{ time }}";
+    console.log("The previous page is from appt at " + day + " " + time)
+    // var patientData = patientData_v2[2];
     //document.getElementById("submit_button").action = "/doctor_appt_view/"+encodeURIComponent(day+" "+time);
 
     function goBack()
@@ -127,16 +128,16 @@
             // Create a toggle button for the visit
             const toggleButton = document.createElement("button");
             toggleButton.classList.add("toggle-button");
-            toggleButton.textContent = `Expand Details of Visit on ${date}`;
+            toggleButton.textContent = `Expand Details of Visit on ${day}`;
 
             // Add a click event listener to toggle the visibility and update the button text
             toggleButton.addEventListener("click", () => {
                 if (visitContainer.style.display === "none") {
                     visitContainer.style.display = "block";
-                    toggleButton.textContent = `Hide Details of Visit on ${date}`;
+                    toggleButton.textContent = `Hide Details of Visit on ${day}`;
                 } else {
                     visitContainer.style.display = "none";
-                    toggleButton.textContent = `Expand Details of Visit on ${date}`;
+                    toggleButton.textContent = `Expand Details of Visit on ${day}`;
                 }
             });
 
@@ -150,6 +151,7 @@
     }
 
     function renderHeartRateTrendChart() {
+        console.log("Clicking on heart rate trend...")
         // Heart rate data stored in a list (array)
         const heartRateData = Object.values(patientData).map(obj => obj['BPM']);
 
@@ -234,10 +236,11 @@
         });
     }
     window.onload = function() {
-        //renderPatientInfo();
+        console.log("Past visits being rendered...")
         renderPatientVisits();
         renderHeartRateTrendChart();
         renderOxySatTrendChart();
+        console.log("Past visits has been rendered...")
     }
 </script>
 <body>

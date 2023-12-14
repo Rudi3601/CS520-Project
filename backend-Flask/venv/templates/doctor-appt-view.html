@@ -73,6 +73,18 @@
         // Continue with form submission if the input is valid
         return true;
     }
+
+    function redirectToPage() {
+        // Replace '#' with the actual URL you want to redirect to
+        //window.location.href = '/doctor_appt_'+String(doctor_info["id"])+'/' + encodeURIComponent(name);
+        var user_details = {{ user_details | tojson}};
+        var patientUsername = user_details.username;
+        var date = user_details.day;
+        var time = user_details.time;
+        var patientIDDayTime = String(patientUsername) + " " + date + " " + time;
+        window.location.href = '/medical_history_record/' + encodeURIComponent(patientIDDayTime);
+    }
+
     window.onload = function() {
         var user_details = {{ user_details | tojson}};
         // BACKEND DATA
@@ -166,8 +178,9 @@
         </form>
         <!-- Button to link to the "Past Visits" page -->
         <br>
-        <a id="myLink" href="/medical_history_record">
-            <button>Past Visits</button>
+        <!-- <a id="myLink" onclick="redirectToPage()"> -->
+        <!-- <a id="myLink" href="/medical_history_record"> -->
+            <button id="myLink" onclick="redirectToPage()">Past Visits</button>
         </a>
     </div>
 </body>

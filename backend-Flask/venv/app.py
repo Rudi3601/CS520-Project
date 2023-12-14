@@ -187,9 +187,12 @@ def doctor_appt_view(appt):
     Day,time = decoded_string.split(" ")
     #print(Day,time)
     #schedule = get_doctor_schedule(id)
-    print(session.get("doctor"))
+    print("session.get(<doctor>): " + str(session.get("doctor")))
     schedule = get_doctor_schedule(session.get("doctor"))
-    user_details = get_patient(schedule["Schedule"][Day][time])
+    try:
+        user_details = get_patient(schedule["Schedule"][Day][time])
+    except Exception as e:
+        print(e)
     del user_details["_id"]
     del user_details["password"]
     del user_details["hash_key"]
@@ -226,14 +229,18 @@ def appt_submit(day_time):
 @app.route("/medical_history_record/<appt_pat_id>",methods=["GET","POST"])
 def medical_history(appt_pat_id):
     decoded_string = unquote(appt_pat_id)
-    patient_id,Day,time = decoded_string.split(" ")
+    patient_id, day, time = decoded_string.split(" ")
     appointments = get_all_appointments(patient_id)
     # print(appointments)
+    appointments_list = []
     if(appointments):
     #     for doc in appointments:
     #         print(f"{doc}:{type(doc)}")
-        appointments = list(appointments)
-        return render_template("medical_history_record_v2.html",patient_details_and_appt = [Day,time,appointments])
+        # appointments = list(appointments)
+        for x in appointments:
+            del x["_id"]
+            appointments_list.append(x)
+        return render_template("medical_history_record_v2.html", day=day, time=time, appts=appointments_list)
 
 @app.route("/patient_logout",methods=["GET","POST"])
 def patient_logout():

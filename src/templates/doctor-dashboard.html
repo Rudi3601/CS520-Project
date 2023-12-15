@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- This page renders the doctor's schedule of the week -->
+    <!-- Doctor can access patient's appointment from here -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Schedule</title>
@@ -126,6 +128,10 @@
     </table>
 
     <script>
+        /**
+         * @param name: Day and Time
+         * Generate a URI and redirect to the specific appointment
+         */
         function redirectToPage(name) {
             // Replace '#' with the actual URL you want to redirect to
             //window.location.href = '/doctor_appt_'+String(doctor_info["id"])+'/' + encodeURIComponent(name);

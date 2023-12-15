@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- If the patient is not already in the database, create a profile here along with the personal information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='patient-register.css') }}">
     <script>
+        /**
+         *  push alert on the UI if the input is invalid
+         */
         function validateName() {
             var nameInput = document.getElementById("name");
             var regex = /^[a-zA-Z\s]*$/; // Only allow letters and spaces
@@ -16,6 +20,10 @@
                 nameInput.focus();
             }
         }
+
+        /**
+         * Checks if the password and confirm password matches
+         */
         var check = function() {
             if (document.getElementById('password').value ==
                 document.getElementById('confirm_password').value) {
@@ -26,6 +34,10 @@
                 document.getElementById('message').innerHTML = 'Passwords not matching';
             }
         }
+
+        /**
+         * Validate the input format. Prevent submitting if not valid
+         */
         function validateForm() {
             var nameInput = document.getElementById("name");
             var usernameInput = document.getElementById("username");

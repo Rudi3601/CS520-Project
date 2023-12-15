@@ -60,6 +60,10 @@ def patient_register():
 def doctor_login_page():
     return render_template("doctor-login.html")
 
+@app.route("/doctor_login_error")
+def doctor_login_error():
+    return render_template("doctor-login-error.html")
+
 @app.route("/doctor_login_submit",methods=["GET","POST"])
 def doctor_login_submit():
     if request.method =="POST":
@@ -76,7 +80,11 @@ def doctor_login_submit():
             return redirect(url_for('doctor_portal',doctor_info=doctor_info))
             #return redirect(url_for('doctor_portal'))
         else:
-            return """<html>Wrong username or password</html>"""
+            return redirect(url_for('doctor_login_error'))
+
+@app.route("/patient_login_error")
+def patient_login_error():
+    return render_template("patient_login_error.html")
 
 @app.route("/patient_login_submit",methods=["GET","POST"])
 def patient_login_submit():
@@ -94,7 +102,7 @@ def patient_login_submit():
             status["CurrentAppointment"] = "None"
             return redirect(url_for('patient_portal',user_details=status))
         else:
-            return """<html>Wrong username or password</html>"""
+            return redirect(url_for('patient_login_error'))
 
 @app.route("/PatientPortal",methods=["GET","POST"])
 def patient_portal():
@@ -165,7 +173,7 @@ def patient_appt(appt):
     decoded_string = unquote(appt)
     Day,time = decoded_string.split(" ")
     user_details = get_patient(session.get("patient"))
-    status = book_appointment(session.get("d_id"),user_details["username"],Day,time,"fever")
+    status = book_appointment(session.get("d_id"),user_details["username"],Day,time,"")
     if(status):
         if(int(session.get("d_id"))==1):
             d_name = "Dr.Heather Conboy"
@@ -181,7 +189,7 @@ def patient_appt(appt):
         return redirect(url_for('patient_portal',user_details = user_details))
 
     else:
-        return """Not able to book appointment"""
+        return """Error in code: Not able to book appointment"""
 
 @app.route("/doctor_appt_view/<appt>")
 def doctor_appt_view(appt):
@@ -226,7 +234,7 @@ def appt_submit(day_time):
     d_id = session.get("doctor")
     print(d_id, Day, time)
     patient = get_appointment(session.get("doctor"), Day, time)
-    print(patient)
+    print(reasons)
     
     status = update_appointment(session.get("doctor"), Day, time, bp=bp, bpm=bpm, oxysat=oxysat, reasons=reasons, docnotes=notes)
     if(status):

@@ -3,7 +3,7 @@ body,
 h1,
 p,
 table {
-  margin: 0;
+  margin: 20px;
   padding: 0;
 }
 
@@ -16,24 +16,32 @@ body {
 }
 
 h2 {
-  color: #007bff;
+  color: #3498db;
+  margin: 20px;
 }
 
 /* Style the table */
 table {
-  width: 100%;
+  width: 60%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-left: 20px;
 }
 
-th,
-td {
-  padding: 12px;
+th {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
   text-align: left;
 }
 
+td {
+  padding: 10px;
+  border: 1px solid black;
+}
+
 thead {
-  background-color: #007bff;
+  background-color: #3498db;
   color: #fff;
 }
 
@@ -43,7 +51,7 @@ tbody tr:nth-child(even) {
 
 /* Style the links */
 a {
-  color: #007bff;
+  color: #3498db;
   text-decoration: none;
   font-weight: bold;
 }

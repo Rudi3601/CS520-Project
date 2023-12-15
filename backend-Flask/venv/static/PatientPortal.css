@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
+  margin-left: 40px;
   background-color: #f4f4f4;
 }
 
@@ -12,7 +13,7 @@ body {
 }
 
 .btn {
-  background-color: #007bff; /* Changed to blue */
+  background-color: #3498db; /* Changed to blue */
   color: white;
   padding: 10px 20px;
   text-align: center;
@@ -24,7 +25,7 @@ body {
 }
 
 .btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #3498db; /* Darker blue on hover */
 }
 
 /* Style the editable fields */
@@ -35,5 +36,20 @@ body {
 
 .patient-details span[contenteditable="true"]:focus {
   outline: none;
-  border-bottom: 1px dashed #007bff; /* Blue border on focus */
+  border-bottom: 1px dashed #3498db; /* Blue border on focus */
+}
+
+#logout {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+form button {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }

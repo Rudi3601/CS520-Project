@@ -50,37 +50,47 @@
     <header>
         <h1>Patient Portal</h1>
     </header>
-
         <div class="info-section">
             <label class="info">Name:</label>
             <span id="name"></span>
         </div>
+
+        <br>
 
         <div class="info-section">
             <label class="info">Date of Birth:</label>
             <span id="dob"></span>
         </div>
 
+        <br>
+        
         <div class="info-section">
             <label class="info">Allergies:</label>
             <span id="allergies"></span>
         </div>
 
+        <br>
+        
         <div class="info-section">
             <label class="info">Medical History:</label>
             <span id="medicalHistory"></span>
         </div>
 
+        <br>
+        
         <div class="info-section">
             <label class="info">Current Appointment:</label>
             <span id="CurrentAppointment"></span>
         </div>
 
+        <br>
+        
         <!---<button class="btn" onclick="editInformation()">Update Information</button>--->
         <button class="btn" onclick="requestAppointment()">Request Appointment</button>
-    </div>
 
-    <form action="{{ url_for('patient_logout') }}" method="post">
+    <br>
+        
+    <form id="logout" action="{{ url_for('patient_logout') }}" method="post">
         <button type="submit">Logout</button>
     </form>
 

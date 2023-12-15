@@ -83,7 +83,7 @@ def patient_login(user, passw):
         return False
 
 # try:
-#     id = patient_login("padhiyaman", "12345")
+#     id = patient_login("dgondalia", "userte")
 #     print(id)
 # except Exception as e:
 #     print(e)
@@ -250,19 +250,14 @@ def create_empty_schedule():
     db = client['test']
     doctor_collection = db['doctors']
     collection = db['schedule']
-    num_documents = collection.count_documents({})
-    
+        
     all_doctors = doctor_collection.find()
     doctor_id_list = []
     for doctor in all_doctors:
         doctor_id_list.append(doctor['DoctorID'])
-    
-    print(doctor_id_list)
-    
+        
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     work_hours = ["8-9", "9-10", "10-11", "11-12", "12-13", "13-14", "14-15", "15-16", "16-17", "17-18"]
-    
-    schedule = dict()
     
     for d in doctor_id_list:
         doctor_id = dict()
@@ -490,7 +485,7 @@ def update_appointment(doctor_id, day, hour, bp="", bpm="", oxysat="", reasons="
         appointment['BPM'] = bpm if appointment['BPM'] == "" and bpm != "" else ""
         appointment['OxySat'] = oxysat if appointment['OxySat'] == "" and oxysat != "" else ""
         appointment['DocNotes'] = docnotes if appointment['DocNotes'] == "" and docnotes != "" else ""
-        appointment['Reason'] = reasons if appointment['Reason'] == "" and reasons != "" else ""
+        appointment['Reason'] = reasons if reasons != "" else ""
         print("Updated the current appointment at update_appointment: ")
         print(appointment)
         collection.update_one({"DoctorID": doctor_id, "PatientID": patient, "Day": day, "Time": hour}, {"$set": appointment})

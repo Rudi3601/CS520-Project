@@ -1,7 +1,28 @@
 # Patient Tracker System Backend
 UMass CS520 Fall 2023 Project
 
+## Usage
+```
+pip3 install -r requirements.txt
+cd src
+pip3 app.py
+```
+You will see a message similar to "Running on http://127.0.0.1:5000". <br>
+Open the link on your browser and you can start experimenting with the app.
+
+### Existing Profiles to play with
+For doctors, the profiles already exist in the database. You can log in with the following username/password pairs to experiment. <br>
+hconboy/doctor11
+
+For patients, you can either create new profiles, or use the following username/password pairs that already exist in the database.
+
+## Run test
+```
+python3 -m pytest
+```
+
 ## Flask app
+The flask app takes care of the routing and rendering of html pages. It also makes sure the logic works between patient login, doctor login, and scheduling.
 
 ## Mongo Client
 #### Patient Login/Register:
